@@ -1,0 +1,34 @@
+{
+  "presets": [
+    {
+      "id": "late_night_radio",
+      "name": "深夜电台型",
+      "description": "低沉、缓慢、温暖。适合都市夜景、孤独场景。",
+      "elevenlabs_voice_id": ""
+    },
+    {
+      "id": "morning_cafe",
+      "name": "晨间咖啡馆型",
+      "description": "明亮、轻盈、女声。适合甜宠、温馨场景。",
+      "elevenlabs_voice_id": ""
+    },
+    {
+      "id": "ancient_narrator",
+      "name": "古风旁白型",
+      "description": "苍劲、有韵律。适合古装、武侠场景。",
+      "elevenlabs_voice_id": ""
+    },
+    {
+      "id": "suspense_whisper",
+      "name": "悬疑低语型",
+      "description": "克制、紧绷、略带气声。适合悬疑、犯罪场景。",
+      "elevenlabs_voice_id": ""
+    },
+    {
+      "id": "cold_statement",
+      "name": "冷峻陈述型",
+      "description": "中性、几乎无情感色彩。适合科幻、商战场景。",
+      "elevenlabs_voice_id": ""
+    }
+  ]
+}

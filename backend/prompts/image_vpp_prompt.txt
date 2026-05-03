@@ -1,0 +1,7 @@
+(使用 image edit + mask API)
+在 mask 标记的位置({empty_surface}),自然地放置 {selected_brand} 的产品。
+要求:
+- 光照方向、强度与原画面完全一致
+- 物体的阴影、反射符合场景物理逻辑
+- 产品标签上的文字必须清晰可读
+- 不要修改 mask 之外的任何像素

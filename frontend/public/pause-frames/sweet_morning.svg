@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff2e8"/>
+      <stop offset="60%" stop-color="#ffd9c4"/>
+      <stop offset="100%" stop-color="#f7b89f"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.85" cy="0.2" r="0.3">
+      <stop offset="0%" stop-color="#fff5d8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fff5d8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#g3)"/>
+  <rect width="1280" height="720" fill="url(#sun)"/>
+  <!-- 咖啡杯 -->
+  <g>
+    <ellipse cx="640" cy="460" rx="120" ry="22" fill="#fff" opacity="0.6"/>
+    <path d="M 540 460 Q 540 600 580 620 L 700 620 Q 740 600 740 460 Z" fill="#ffffff"/>
+    <ellipse cx="640" cy="460" rx="100" ry="14" fill="#a16a4a"/>
+    <path d="M 740 490 Q 800 490 800 540 Q 800 580 740 580" fill="none" stroke="#ffffff" stroke-width="14"/>
+  </g>
+  <!-- 蒸汽 -->
+  <g stroke="#ffffff" stroke-width="3" fill="none" opacity="0.6">
+    <path d="M 600 380 Q 610 360 600 340 Q 590 320 600 300"/>
+    <path d="M 640 390 Q 650 370 640 350 Q 630 330 640 310"/>
+    <path d="M 680 380 Q 690 360 680 340 Q 670 320 680 300"/>
+  </g>
+  <text x="60" y="660" fill="#a06850" font-family="serif" font-size="28" opacity="0.85">甜宠晨间 · 占位图</text>
+  <text x="60" y="690" fill="#a06850" font-family="serif" font-size="18" opacity="0.65">请由用户替换为真实暂停帧</text>
+</svg>
