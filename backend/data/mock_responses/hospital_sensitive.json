@@ -1,0 +1,16 @@
+{
+  "scene": {
+    "scene": "夜间病房",
+    "characters": "床边静默",
+    "emotion": ["沉重", "悲伤"],
+    "color_tone": "冷蓝灰低饱和",
+    "lighting": "单盏夜灯 + 仪器面光",
+    "objects": ["病床", "输液架", "心电监护仪"],
+    "empty_surfaces": ["床边推车", "墙面挂钩"],
+    "sensitivity": "high"
+  },
+  "decision": {
+    "decision": "no_ad",
+    "reason": "病房场景情绪沉重,任何商业插入都会构成冒犯。系统进入克制模式:仅保留极简暂停界面与一句安静提示语,直至用户主动恢复播放。"
+  }
+}

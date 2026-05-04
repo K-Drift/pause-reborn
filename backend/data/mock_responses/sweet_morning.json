@@ -1,0 +1,26 @@
+{
+  "scene": {
+    "scene": "晨间公寓窗边",
+    "characters": "女主独享早餐时光",
+    "emotion": ["甜蜜", "轻松"],
+    "color_tone": "柔粉暖橙高明度",
+    "lighting": "晨光透窗,柔和散射",
+    "objects": ["白瓷咖啡杯", "蒸汽", "窗台"],
+    "empty_surfaces": ["窗台右侧", "杯托旁桌面"],
+    "sensitivity": "low"
+  },
+  "decision": {
+    "decision": "show_ad",
+    "selected_brand": "晨啄 · 手冲挂耳咖啡",
+    "alternative_brands": ["云朵酸奶", "蜂蜜柠檬茶"],
+    "ad_copy": "醒来的第一件事,值得慢一点。",
+    "voice_preset": "晨间咖啡馆型",
+    "scores": {
+      "scene_emotion_fit": 94,
+      "brand_tone_match": 91,
+      "user_disturbance": "low",
+      "predicted_attention_lift": "+208% vs 传统弹窗"
+    },
+    "reasoning": "晨光甜蜜场景天然适配热饮品类。晨间咖啡馆声线明亮轻盈,与画面情绪同调;文案以「慢一点」对位剧中节奏,转化路径自然。"
+  }
+}

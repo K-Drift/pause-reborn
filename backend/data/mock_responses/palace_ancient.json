@@ -1,0 +1,26 @@
+{
+  "scene": {
+    "scene": "古代庭院夜",
+    "characters": "宫装女子独立檐下",
+    "emotion": ["悬疑", "孤独"],
+    "color_tone": "冷蓝低饱和带朱红点缀",
+    "lighting": "灯笼局部暖光 + 月色冷面",
+    "objects": ["屋檐瓦当", "红灯笼", "石阶"],
+    "empty_surfaces": ["檐下木桌", "石阶左侧空地"],
+    "sensitivity": "low"
+  },
+  "decision": {
+    "decision": "show_ad",
+    "selected_brand": "云隐 · 古法白茶",
+    "alternative_brands": ["檀香木雅扇", "线装诗笺"],
+    "ad_copy": "一盏灯,半盏茶,不语。",
+    "voice_preset": "古风旁白型",
+    "scores": {
+      "scene_emotion_fit": 89,
+      "brand_tone_match": 85,
+      "user_disturbance": "low",
+      "predicted_attention_lift": "+162% vs 传统弹窗"
+    },
+    "reasoning": "古风冷调宜茶不宜酒。古风旁白声线与檐下场景同呼吸,文案七字成韵,延续戏剧情绪而非打断。"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scene": {
+    "scene": "都市夜晚居酒屋",
+    "characters": "男性独自饮酒",
+    "emotion": ["孤独"],
+    "color_tone": "暖黄色低饱和",
+    "lighting": "昏暗温暖,顶灯单点光源",
+    "objects": ["吧台", "玻璃酒杯", "酒瓶"],
+    "empty_surfaces": ["吧台右侧空位", "酒杯旁台面"],
+    "sensitivity": "low"
+  },
+  "decision": {
+    "decision": "show_ad",
+    "selected_brand": "单一麦芽 · 长泽十二年",
+    "alternative_brands": ["山系干邑", "深夜便利店啤酒"],
+    "ad_copy": "今晚的夜,不必兑水。",
+    "voice_preset": "深夜电台型",
+    "scores": {
+      "scene_emotion_fit": 92,
+      "brand_tone_match": 88,
+      "user_disturbance": "low",
+      "predicted_attention_lift": "+184% vs 传统弹窗"
+    },
+    "reasoning": "暖黄居酒屋 + 孤独情绪适配威士忌品类。深夜电台声线放大画面静默感,广告变成画外旁白而非弹窗,干扰极低。"
+  }
+}
