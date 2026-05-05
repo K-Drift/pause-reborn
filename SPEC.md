@@ -103,6 +103,20 @@
 
 敏感场景包括但不限于:葬礼、病房、严重冲突、自杀相关、灾难现场。
 
+### 1.4.4 前端三段渐次反馈
+
+三段式 Pipeline 在工程上拆为三个独立 HTTP 接口,前端串行调用,后一段以前一段的结果为入参。每段完成后立刻刷新对应 UI,观众能感知到"先看到画面理解 → 再看到品牌选择 → 最后看到广告图"的递进。
+
+|段|后端接口|出参核心字段|前端反馈|
+|---|---|---|---|
+|1|`POST /api/analyze-scene`|`scene` JSON|调试面板"场景理解(VLM)"块淡入|
+|2|`POST /api/decide-ad`|`decision` JSON|调试面板"选中品牌""文案 & 声线""契合度评分"逐项淡入|
+|3|`POST /api/generate-image`|`image_url`|右侧 AI 改造面板淡入,广告卡片直接渲染真图|
+
+每个响应统一带 `stage` / `source`(`real` / `mock` / `mock_fallback` / `skipped`)/ `elapsed_ms`,前端据此切加载文案、节奏与降级提示。任意一段真 API 失败时,后端自动回落到 `data/mock_responses/{frame_id}.json`,前端横幅"AI 暂时离开了一下,以下为预设示例",流程不中断。
+
+`USE_REAL_AI=false` 时三段全走 mock,后端按 1.5s / 1.0s / 2.0s 的演示节奏假等待,统一乘以 `MOCK_DELAY_MULTIPLIER`(默认 1.0)以适配排练或调试。
+
 ---
 
 ## 1.5 功能模块详解
@@ -348,7 +362,7 @@ pause-reborn/
     - 不要过度抽象(demo 不需要"未来扩展性")
     - 错误处理:API 调用失败时直接 `print` 错误并返回降级响应,不要写复杂的重试逻辑
 6. **测试方式**:用真实 API 调用测试,不要写 mock。如果 API 配额不够,停下来通知用户。
-7. **Git 提交**:每完成一个 §11 中的阶段做一次 commit,commit message 格式:`[Stage N] 简短描述`。
+7. **Git 提交**:每完成一个 CLAUDE.md 阶段表中的 Stage 做一次 commit,commit message 格式:`[Stage N] 简短描述`。
 8. **禁止事项**:
     - 不要修改 SPEC.md 本身(如需调整 SPEC,必须先和用户讨论)
     - 不要添加 Docker / CI 配置

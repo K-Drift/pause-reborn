@@ -10,12 +10,13 @@
 实施计划在 `C:\Users\HP\.claude\plans\1-spec-md-clever-hinton.md`(用户已批准)。
 按 5 个 Stage 推进,每 Stage 一个 commit。
 
-- [x] **Stage 0**:脚手架与占位素材(进行中,本次任务)
-- [ ] **Stage 1**:主场景静态版(Mock 数据驱动)
-- [ ] **Stage 2**:三段 Pipeline 真 API 接入(2a VLM / 2b LLM / 2c 图像)
-- [ ] **Stage 3**:画像切换器 + 状态切换器
-- [ ] **Stage 4**:对话式追问 + TTS
-- [ ] **Stage 5**:VPP 示例 + 广告主入口(可选)
+- [x] **Stage 0**:脚手架与占位素材
+- [x] **Stage 1**:主场景静态版(Mock 数据驱动)
+- [x] **Stage 2**:三段 Pipeline 真 API 接入(2a VLM / 2b LLM / 2c 图像)
+- [x] **Stage 4**:分阶段加载与渐次反馈体验升级(三段 endpoint 拆分 + 渐次淡入 + 真图植入广告卡)
+- [ ] **Stage 3**:画像切换器 + 状态切换器(尚未实施,与 Stage 4 互不依赖)
+- [ ] **Stage 5**:对话式追问 + TTS(原 Stage 4,后延)
+- [ ] **Stage 6**:VPP 示例 + 广告主入口(原 Stage 5,后延,可选)
 
 **API 选型 TBD**:每段开始接入真 API 前,**必须先停下来问用户**:服务商是哪家?key 放哪个环境变量?
 

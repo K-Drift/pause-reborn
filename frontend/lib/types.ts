@@ -60,15 +60,70 @@ export interface ContentSwitchDecision {
   reason: string;
 }
 
-export type Decision = ShowAdDecision | NoAdDecision | ContentSwitchDecision;
+// Stage 7:前端在 stage1 sensitivity==='high' 时熔断,不调 stage2/3,本地构造该决策。
+// 不会出现在任何后端响应里,纯前端哨兵。
+export interface RestraintModeDecision {
+  decision: "restraint";
+  reason: string;
+}
 
-export interface AnalyzeResponse {
+export type Decision =
+  | ShowAdDecision
+  | NoAdDecision
+  | ContentSwitchDecision
+  | RestraintModeDecision;
+
+// Stage 4:三段独立 endpoint 的响应类型
+// source 值:
+//   real             — 真 API 成功
+//   real_overridden  — 真 API 成功,但被服务端硬兜底改写(如 fatigue 强转 content_switch)
+//   mock             — USE_REAL_AI=false,直接走 mock_responses
+//   mock_fallback    — 真 API 失败,自动降级到 mock
+//   skipped          — image 段无需调用(decision != show_ad)
+//   cached           — 前端 scene 缓存命中,未重跑 stage1
+export type StageSource =
+  | "real"
+  | "real_overridden"
+  | "mock"
+  | "mock_fallback"
+  | "skipped"
+  | "cached";
+
+export interface AnalyzeSceneResponse {
+  stage: "scene";
+  source: StageSource;
+  scene: SceneJSON;
+  elapsed_ms: number;
+  error?: string;
+}
+
+export interface DecideAdRequest {
+  frame_id: string;
+  scene: SceneJSON;
+  persona_id?: string;
+  user_state?: "normal" | "emotional_fatigue";
+}
+
+export interface DecideAdResponse {
+  stage: "decision";
+  source: StageSource;
+  decision: Decision;
+  elapsed_ms: number;
+  error?: string;
+}
+
+export interface GenerateImageRequest {
+  frame_id: string;
   scene: SceneJSON;
   decision: Decision;
 }
 
-export interface AnalyzeRequest {
-  frame_id: string;
-  persona_id?: string;
-  user_state?: "normal" | "emotional_fatigue";
+export interface GenerateImageResponse {
+  stage: "image";
+  source: StageSource;
+  image_url: string | null;
+  remote_url?: string;
+  reason?: string;
+  elapsed_ms: number;
+  error?: string;
 }

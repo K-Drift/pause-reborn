@@ -1,4 +1,101 @@
 {
-  "_note": "Stage 1/3 扩充。字段:id, brand, category, tone, forbidden_personas, sku, copy_seed。",
-  "ads": []
+  "_note": "广告库。LLM 必须从 ads 数组中选品牌,不可凭空捏造。category 用于画像层 forbidden 否决。",
+  "ads": [
+    {
+      "id": "naga_12",
+      "brand": "单一麦芽 · 长泽十二年",
+      "category": "威士忌",
+      "tone": ["深夜", "孤独", "克制", "高端"],
+      "sku": "酒类·烈酒",
+      "copy_seed": "今晚的夜,不必兑水。"
+    },
+    {
+      "id": "shanxi_cognac",
+      "brand": "山系 · 干邑年份桶",
+      "category": "干邑",
+      "tone": ["山林", "沉静", "克制"],
+      "sku": "酒类·烈酒",
+      "copy_seed": "山高水长,慢酌一刻。"
+    },
+    {
+      "id": "midnight_lager",
+      "brand": "便利店 · 深夜精酿",
+      "category": "啤酒",
+      "tone": ["都市", "深夜", "随性"],
+      "sku": "酒类·啤酒",
+      "copy_seed": "便利店灯光,是深夜的小确幸。"
+    },
+    {
+      "id": "yunyin_baicha",
+      "brand": "云隐 · 古法白茶",
+      "category": "茶",
+      "tone": ["古风", "禅意", "克制", "雅致"],
+      "sku": "茶饮",
+      "copy_seed": "一盏灯,半盏茶,不语。"
+    },
+    {
+      "id": "chenzhuo_coffee",
+      "brand": "晨啄 · 手冲挂耳咖啡",
+      "category": "咖啡",
+      "tone": ["晨间", "温柔", "甜蜜", "明亮"],
+      "sku": "咖啡",
+      "copy_seed": "醒来的第一件事,值得慢一点。"
+    },
+    {
+      "id": "yexi_aroma",
+      "brand": "夜息 · 助眠香薰",
+      "category": "家居·香氛",
+      "tone": ["深夜", "安眠", "克制", "温柔"],
+      "sku": "家居",
+      "copy_seed": "把屏幕关一会儿,屋子还在。"
+    },
+    {
+      "id": "moyan_ink",
+      "brand": "古法墨砚",
+      "category": "文房四宝",
+      "tone": ["古风", "雅致", "沉静"],
+      "sku": "文化用品",
+      "copy_seed": "落墨之时,世界静下来。"
+    },
+    {
+      "id": "jingmi_linen",
+      "brand": "静谧 · 亚麻床品",
+      "category": "家居·床品",
+      "tone": ["温暖", "安睡", "简约"],
+      "sku": "家居",
+      "copy_seed": "好梦,从一寸亚麻开始。"
+    },
+    {
+      "id": "qing_gong",
+      "brand": "清供 · 案头拈花",
+      "category": "家居·摆件",
+      "tone": ["禅意", "古风", "雅致"],
+      "sku": "家居",
+      "copy_seed": "案上一枝,日子有声。"
+    },
+    {
+      "id": "yuyu_blanket",
+      "brand": "余余 · 羊毛盖毯",
+      "category": "家居·织物",
+      "tone": ["温暖", "安睡", "深夜", "克制"],
+      "sku": "家居",
+      "copy_seed": "把今夜,披在肩上。"
+    },
+    {
+      "id": "feicui_bracelet",
+      "brand": "翡翠 · 极简手串",
+      "category": "饰品",
+      "tone": ["古风", "雅致", "克制"],
+      "sku": "饰品",
+      "copy_seed": "腕间一抹绿,心上半两闲。"
+    },
+    {
+      "id": "muxi_tea_set",
+      "brand": "木夕 · 旅行茶具",
+      "category": "茶器",
+      "tone": ["古风", "雅致", "禅意"],
+      "sku": "茶具",
+      "copy_seed": "一壶一杯,落脚即家。"
+    }
+  ]
 }

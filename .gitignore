@@ -35,6 +35,13 @@ next-env.d.ts
 .cache/
 backend/data/cached_audio/
 
+# Pipeline 生成产物(可重新生成,不入库)
+backend/generated/
+
+# 测试落盘工件
+backend/tests/_*.png
+backend/tests/_*.mp3
+
 # 本地 Agent 配置
 .claude/
 

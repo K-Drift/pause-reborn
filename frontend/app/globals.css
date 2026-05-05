@@ -1,26 +1,31 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Stage 8:产品级色板。所有自定义颜色在这里集中注册,
+   避免散落在多处使用 Tailwind 默认色板。 */
+@theme {
+  /* 背景层级 */
+  --color-background-base: #0a0a0a;
+  --color-background-card: #1a1a1a;
+  --color-background-elevated: #242424;
+
+  /* 描边层级 */
+  --color-border-subtle: #2a2a2a;
+  --color-border-default: #3a3a3a;
+
+  /* 文字层级 */
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-tertiary: #666666;
+
+  /* 强调色 */
+  --color-accent-success: #10b981;
+  --color-accent-warning: #f59e0b;
+  --color-accent-brand-from: #a78bfa;
+  --color-accent-brand-to: #06b6d4;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background-base);
+  color: var(--color-text-primary);
 }

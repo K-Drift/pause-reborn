@@ -1,4 +1,50 @@
 {
-  "_note": "Stage 3 扩充。这里是 Stage 0 占位,字段结构可改。",
-  "personas": []
+  "_note": "用户画像库。前端目前不传 persona_id 时,后端返回 default。Stage 后续接 PersonaSwitcher 时会用到全部 id。",
+  "personas": [
+    {
+      "id": "default",
+      "name": "未知用户",
+      "age": null,
+      "gender": null,
+      "interests": [],
+      "lifestyle": "无标签",
+      "forbidden_categories": []
+    },
+    {
+      "id": "urban_male_35",
+      "name": "都市金融男 · 35 岁",
+      "age": 35,
+      "gender": "男",
+      "interests": ["威士忌", "雪茄", "高端汽车", "金融", "深夜独酌"],
+      "lifestyle": "金融从业,商务应酬频繁,品味偏精致克制",
+      "forbidden_categories": []
+    },
+    {
+      "id": "young_female_25",
+      "name": "年轻女生 · 25 岁",
+      "age": 25,
+      "gender": "女",
+      "interests": ["手冲咖啡", "甜品", "甜宠剧", "美妆", "猫"],
+      "lifestyle": "都市白领,关注生活美学,常逛独立咖啡馆与展览",
+      "forbidden_categories": []
+    },
+    {
+      "id": "executive_female_40",
+      "name": "女性高管 · 40 岁",
+      "age": 40,
+      "gender": "女",
+      "interests": ["白茶", "精品瓷器", "古典音乐", "瑜伽", "极简家居"],
+      "lifestyle": "高净值,生活节奏自控,偏好克制与雅致的品牌叙事",
+      "forbidden_categories": ["低价快消"]
+    },
+    {
+      "id": "expecting_mother",
+      "name": "准妈妈 · 30 岁",
+      "age": 30,
+      "gender": "女",
+      "interests": ["母婴", "胎教", "营养", "孕期瑜伽"],
+      "lifestyle": "怀孕中,关注健康与安全,对刺激性产品高度警惕",
+      "forbidden_categories": ["威士忌", "干邑", "啤酒", "白酒", "酒类", "咖啡因刺激性饮品"]
+    }
+  ]
 }
