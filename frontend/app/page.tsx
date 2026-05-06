@@ -5,7 +5,8 @@ import NavBar from "@/components/NavBar";
 import VideoStage, { type VideoStageHandle } from "@/components/VideoStage";
 import ComparisonOverlay from "@/components/ComparisonOverlay";
 import AIDecisionPanel from "@/components/AIDecisionPanel";
-import VPPShowcase from "@/components/VPPShowcase";
+// Stage 8.4:VPP 进阶展示区已下线(与主对比区视觉重复)。组件源码保留,便于将来恢复。
+// import VPPShowcase from "@/components/VPPShowcase";
 import { analyzeScene, decideAd, generateImage } from "@/lib/api";
 import type { Decision, SceneJSON, StageSource } from "@/lib/types";
 import {
@@ -22,6 +23,7 @@ import {
 
 // Stage 8:整页驾驶舱布局 + 三段流水线 + 防竞态。
 // 流水线逻辑沿用 Stage 5 的 AbortController + scene 缓存 + 敏感熔断。
+// USE_HANDCRAFTED_ADS=true 时三段全部走 public/mock-data/*.json,分支已下沉到 lib/api.ts。
 type Phase = "idle" | "loading" | "ready" | "error";
 
 export interface SceneState {
@@ -38,6 +40,9 @@ export interface ImageState {
   phase: Phase;
   image_url?: string | null;
   source?: StageSource;
+  _ai_status?: "live" | "fallback";
+  _fallback_reason?: string;
+  _fallback_stage?: string;
 }
 
 const IDLE: Phase = "idle";
@@ -85,7 +90,11 @@ export default function Home() {
           const r = await analyzeScene({ frame_id: frameId }, ac.signal);
           if (!stillCurrent()) return;
           sceneJson = r.scene;
-          sceneCacheRef.current.set(frameId, sceneJson);
+          // 只缓存真 VLM 成功的结果;mock / mock_fallback 不进缓存,
+          // 否则一次降级会把"伪场景"卡死整个 session,后续点击永远跳过 stage1
+          if (r.source === "real") {
+            sceneCacheRef.current.set(frameId, sceneJson);
+          }
           setSceneState({ phase: "ready", data: sceneJson, source: r.source });
         } catch (e) {
           if (!stillCurrent() || isAbort(e)) return;
@@ -150,6 +159,9 @@ export default function Home() {
           phase: "ready",
           image_url: r.image_url,
           source: r.source,
+          _ai_status: r._ai_status,
+          _fallback_reason: r._fallback_reason,
+          _fallback_stage: r._fallback_stage,
         });
       } catch (e) {
         if (!stillCurrent() || isAbort(e)) return;
@@ -249,9 +261,10 @@ export default function Home() {
         </section>
       </main>
 
-      <VPPShowcase />
+      {/* Stage 8.4:VPP 进阶展示区已下线 */}
+      {/* <VPPShowcase /> */}
 
-      <footer className="mt-16 border-t border-border-subtle px-8 py-6 text-xs text-text-tertiary">
+      <footer className="mt-4 border-t border-border-subtle px-8 py-4 text-xs text-text-tertiary">
         Demo · Stage 8 · 仅用于演示,所有品牌、文案、评分均为虚构占位
       </footer>
     </>

@@ -1,0 +1,43 @@
+{
+  "scene": {
+    "concrete_description": "夜间病房床边静默,输液架与心电监护仪微光闪烁",
+    "scene_category": "夜间病房",
+    "scene": "夜间病房",
+    "person_count": 1,
+    "main_action": "床边静默",
+    "characters": "床边静默",
+    "emotion": ["沉重", "悲伤"],
+    "color_tone": "冷蓝灰低饱和",
+    "lighting": "单盏夜灯 + 仪器面光",
+    "key_objects": ["病床", "输液架", "心电监护仪"],
+    "objects": ["病床", "输液架", "心电监护仪"],
+    "empty_surfaces": ["床边推车", "墙面挂钩"],
+    "sensitivity": "high"
+  },
+  "decisions": {
+    "urban_male_35_normal": {
+      "decision": "no_ad",
+      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+    },
+    "urban_male_35_emotional_fatigue": {
+      "decision": "no_ad",
+      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+    },
+    "young_female_25_normal": {
+      "decision": "no_ad",
+      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+    },
+    "young_female_25_emotional_fatigue": {
+      "decision": "no_ad",
+      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+    },
+    "executive_female_40_normal": {
+      "decision": "no_ad",
+      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+    },
+    "executive_female_40_emotional_fatigue": {
+      "decision": "no_ad",
+      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+    }
+  }
+}

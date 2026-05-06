@@ -7,15 +7,18 @@ interface Props {
   onChange: (s: UserState) => void;
 }
 
-// Stage 8:情绪正常 → emerald,情绪疲劳 → amber。
+// 同 PersonaSwitcher 的胶囊+ ::after underline 套路。正常态绿色,疲劳态琥珀。
 export default function StateSwitcher({ value, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs text-text-tertiary">状态</span>
-      <div className="flex items-center gap-1.5">
+      <div className="inline-flex items-center gap-1">
         {USER_STATES.map((s) => {
           const active = s.id === value;
           const fatigue = s.id === "emotional_fatigue";
+          const underlineColor = fatigue
+            ? "after:bg-accent-warning"
+            : "after:bg-accent-success";
           return (
             <button
               key={s.id}
@@ -23,12 +26,10 @@ export default function StateSwitcher({ value, onChange }: Props) {
               title={s.hint}
               onClick={() => onChange(s.id)}
               className={
-                "rounded-full px-3 py-1 text-xs transition-all duration-200 " +
+                "relative cursor-pointer rounded-md px-3 py-1.5 text-xs transition-all duration-200 " +
                 (active
-                  ? fatigue
-                    ? "bg-accent-warning text-white"
-                    : "bg-accent-success text-white"
-                  : "border border-border-default text-text-secondary hover:text-text-primary")
+                  ? `bg-background-elevated text-text-primary after:absolute after:bottom-[-2px] after:left-[10%] after:right-[10%] after:h-0.5 after:content-[''] ${underlineColor}`
+                  : "text-text-tertiary hover:bg-background-elevated/50 hover:text-text-secondary")
               }
             >
               {s.label}

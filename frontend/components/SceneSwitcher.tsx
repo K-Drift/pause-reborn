@@ -8,7 +8,8 @@ interface Props {
   onChange: (id: SceneId) => void;
 }
 
-// Stage 8:NavBar 场景下拉。点击空白处关闭。
+// 主按钮:elevated 底胶囊 + 标签 + 箭头。
+// 下拉:card 底 + shadow-2xl,选中项左侧 2px 品牌渐变细条。
 export default function SceneSwitcher({ value, onChange }: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -29,33 +30,65 @@ export default function SceneSwitcher({ value, onChange }: Props) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-lg bg-background-card px-3 py-1.5 text-sm text-text-primary transition-colors duration-200 hover:bg-background-elevated"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className="flex items-center gap-2 rounded-md bg-background-elevated px-4 py-1.5 text-sm text-text-primary transition-colors duration-200 hover:bg-background-card"
       >
         <span>{current.label}</span>
-        <svg width="10" height="10" viewBox="0 0 12 12" className="text-text-tertiary">
-          <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" />
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 12 12"
+          className={
+            "text-text-tertiary transition-transform duration-200 " +
+            (open ? "rotate-180" : "")
+          }
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M2 4l4 4 4-4"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            fill="none"
+          />
         </svg>
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-2 min-w-[180px] overflow-hidden rounded-lg border border-border-subtle bg-background-card shadow-2xl z-50">
-          {SCENES.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              onClick={() => {
-                onChange(s.id);
-                setOpen(false);
-              }}
-              className={
-                "block w-full px-3 py-2 text-left text-sm transition-colors duration-200 " +
-                (s.id === value
-                  ? "bg-background-elevated text-text-primary"
-                  : "text-text-secondary hover:bg-background-elevated hover:text-text-primary")
-              }
-            >
-              {s.label}
-            </button>
-          ))}
+        <div
+          role="listbox"
+          className="absolute right-0 top-full z-50 mt-2 min-w-[180px] overflow-hidden rounded-md bg-background-card shadow-2xl"
+        >
+          {SCENES.map((s) => {
+            const selected = s.id === value;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                role="option"
+                aria-selected={selected}
+                onClick={() => {
+                  onChange(s.id);
+                  setOpen(false);
+                }}
+                className={
+                  "relative block w-full px-4 py-2 text-left text-sm transition-colors duration-200 " +
+                  (selected
+                    ? "bg-background-elevated text-text-primary"
+                    : "text-text-secondary hover:bg-background-elevated hover:text-text-primary")
+                }
+              >
+                {/* 选中态:左侧 2px 品牌渐变细条 */}
+                {selected && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-accent-brand-from to-accent-brand-to"
+                  />
+                )}
+                {s.label}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

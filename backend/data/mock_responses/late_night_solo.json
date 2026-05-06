@@ -1,5 +1,6 @@
 {
   "scene": {
+    "concrete_description": "深夜室内独自面对屏幕,屏幕冷光打在桌面上",
     "scene": "深夜公寓独处",
     "characters": "独自面对屏幕",
     "emotion": ["孤独", "低落"],

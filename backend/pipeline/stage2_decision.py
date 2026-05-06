@@ -111,10 +111,11 @@ def decide_ad(
         "messages": [{"role": "user", "content": prompt}],
         "response_format": {"type": "json_object"},
         "temperature": 0.3,
-        "max_tokens": 2048,  # 决策 JSON + reasoning 中文段需要充足额度,防止被截断
+        "max_tokens": 4000,  # 决策 JSON + reasoning 中文段需要充足额度,防止被截断
     }
 
     url = base_url.rstrip("/") + "/chat/completions"
+    print(f"[stage2] 即将调用 LLM, max_tokens=4000, model={model}")
     with httpx.Client(timeout=60.0) as client:
         r = client.post(
             url,
@@ -132,6 +133,9 @@ def decide_ad(
     content = data["choices"][0]["message"]["content"]
     if isinstance(content, list):
         content = "".join(p.get("text", "") for p in content if isinstance(p, dict))
+
+    print(f"[stage2] LLM 响应完整长度: {len(content)} 字符")
+    print(f"[stage2] 响应末尾 100 字符: ...{content[-100:]}")
 
     cleaned = _strip_json_fence(content)
     try:

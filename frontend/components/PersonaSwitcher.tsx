@@ -7,12 +7,13 @@ interface Props {
   onChange: (id: string) => void;
 }
 
-// Stage 8:NavBar 内联 pill 切换。选中态用品牌渐变,未选中态低调描边。
+// 选中态:bg-elevated + text-primary + 80% 宽 ::after underline(品牌渐变)。
+// 未选中:透明底,hover 才浮出 elevated/50 + text-secondary。
 export default function PersonaSwitcher({ value, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs text-text-tertiary">画像</span>
-      <div className="flex items-center gap-1.5">
+      <div className="inline-flex items-center gap-1">
         {PERSONAS.map((p) => {
           const active = p.id === value;
           return (
@@ -22,10 +23,10 @@ export default function PersonaSwitcher({ value, onChange }: Props) {
               title={p.hint}
               onClick={() => onChange(p.id)}
               className={
-                "rounded-full px-3 py-1 text-xs transition-all duration-200 " +
+                "relative cursor-pointer rounded-md px-3 py-1.5 text-xs transition-all duration-200 " +
                 (active
-                  ? "bg-gradient-to-r from-accent-brand-from to-accent-brand-to text-white"
-                  : "border border-border-default text-text-secondary hover:text-text-primary")
+                  ? "bg-background-elevated text-text-primary after:absolute after:bottom-[-2px] after:left-[10%] after:right-[10%] after:h-0.5 after:bg-gradient-to-r after:from-accent-brand-from after:to-accent-brand-to after:content-['']"
+                  : "text-text-tertiary hover:bg-background-elevated/50 hover:text-text-secondary")
               }
             >
               {p.label}

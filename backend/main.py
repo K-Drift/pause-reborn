@@ -234,6 +234,11 @@ class AnalyzeSceneRequest(BaseModel):
 
 @app.post("/api/analyze-scene")
 def analyze_scene_route(req: AnalyzeSceneRequest) -> dict:
+    import os
+    print(f"=====================================")
+    print(f"=== 探针输出 USE_REAL_AI: {os.getenv('USE_REAL_AI')} ===")
+    print(f"=====================================")
+    
     started = time.time()
     print(f"\n[/api/analyze-scene] frame_id={req.frame_id!r}  USE_REAL_AI={USE_REAL_AI}", flush=True)
 
@@ -250,7 +255,15 @@ def analyze_scene_route(req: AnalyzeSceneRequest) -> dict:
     try:
         from pipeline.stage1_vision import analyze_scene, load_frame_image
         image_bytes = load_frame_image(req.frame_id)
-        scene = analyze_scene(image_bytes)
+        
+        # ================= 插入探针 =================
+        print(f"========== 探针: 验证图片真伪 ==========")
+        print(f"[stage1] 当前传入的 frame_id: {req.frame_id}")
+        print(f"[stage1] 即将发给VLM的图片大小: {len(image_bytes)} bytes")
+        print(f"========================================")
+        # ============================================
+
+        scene = analyze_scene(image_bytes, frame_id=req.frame_id)
         return {
             "stage": "scene",
             "source": "real",
@@ -361,6 +374,9 @@ def decide_ad_route(req: DecideAdRequest) -> dict:
     except Exception as e:
         traceback.print_exc()
         decision = _decide_mock(req.frame_id, persona_id, user_state)
+        decision["_ai_status"] = "fallback"
+        decision["_fallback_reason"] = f"{type(e).__name__}: {str(e)[:80]}"
+        decision["_fallback_stage"] = "stage2"
         return {
             "stage": "decision",
             "source": "mock_fallback",
@@ -374,6 +390,7 @@ def decide_ad_route(req: DecideAdRequest) -> dict:
     if user_state == "emotional_fatigue":
         decision, overridden = _enforce_fatigue_switch(decision, persona_id)
 
+    decision["_ai_status"] = "live"
     return {
         "stage": "decision",
         "source": "real_overridden" if overridden else "real",
@@ -428,6 +445,7 @@ def generate_image_route(req: GenerateImageRequest) -> dict:
             "image_url": result["image_url"],
             "remote_url": result.get("remote_url"),
             "size_bytes": result.get("size_bytes"),
+            "_ai_status": "live",
             "elapsed_ms": int((time.time() - started) * 1000),
         }
     except Exception as e:
@@ -438,6 +456,9 @@ def generate_image_route(req: GenerateImageRequest) -> dict:
             "source": "mock_fallback",
             "image_url": None,
             "error": _err_short(e),
+            "_ai_status": "fallback",
+            "_fallback_reason": f"{type(e).__name__}: {str(e)[:80]}",
+            "_fallback_stage": "stage3",
             "elapsed_ms": int((time.time() - started) * 1000),
         }
 

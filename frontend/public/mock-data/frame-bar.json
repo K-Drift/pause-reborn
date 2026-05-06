@@ -1,0 +1,79 @@
+{
+  "scene": {
+    "concrete_description": "一名男性独坐居酒屋吧台,杯中残酒,暖灯昏黄",
+    "scene_category": "都市夜晚居酒屋",
+    "scene": "都市夜晚居酒屋",
+    "person_count": 1,
+    "main_action": "独坐饮酒",
+    "characters": "男性独自饮酒",
+    "emotion": ["孤独"],
+    "color_tone": "暖黄色低饱和",
+    "lighting": "昏暗温暖,顶灯单点光源",
+    "key_objects": ["吧台", "玻璃酒杯", "酒瓶"],
+    "objects": ["吧台", "玻璃酒杯", "酒瓶"],
+    "empty_surfaces": ["吧台右侧空位", "酒杯旁台面"],
+    "sensitivity": "low"
+  },
+  "decisions": {
+    "urban_male_35_normal": {
+      "decision": "show_ad",
+      "selected_brand": "单一麦芽 · 长泽十二年",
+      "alternative_brands": ["山系干邑", "深夜便利店啤酒"],
+      "ad_copy": "今晚的夜,不必兑水。",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 92,
+        "brand_tone_match": 88,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+184% vs 传统弹窗"
+      },
+      "reasoning": "暖黄居酒屋 + 孤独情绪适配威士忌品类。深夜电台声线放大画面静默感,广告变成画外旁白而非弹窗,干扰极低。",
+      "selected_surface": "吧台右侧空位"
+    },
+    "urban_male_35_emotional_fatigue": {
+      "decision": "content_switch",
+      "suggested_content": "《孤独的美食家》第三季 · 居酒屋特辑",
+      "reason": "情绪疲劳叠加孤独信号,推送酒类会加深下沉感。改投同调治愈系剧集,陪伴而不打扰。"
+    },
+    "young_female_25_normal": {
+      "decision": "show_ad",
+      "selected_brand": "和柠 · 柚子气泡清酒",
+      "alternative_brands": ["白桃苏打", "蜜桃米酒"],
+      "ad_copy": "一杯气泡,把今天放下。",
+      "voice_preset": "晨间咖啡馆型",
+      "scores": {
+        "scene_emotion_fit": 86,
+        "brand_tone_match": 84,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+156% vs 传统弹窗"
+      },
+      "reasoning": "25 岁女性偏好低度果味酒,清酒气泡感平衡场景孤独情绪而非加重它。文案以「放下」对位剧中静默,转化路径轻盈。",
+      "selected_surface": "酒杯旁台面"
+    },
+    "young_female_25_emotional_fatigue": {
+      "decision": "content_switch",
+      "suggested_content": "「治愈晚安」歌单 · 城市夜灯版",
+      "reason": "情绪疲劳叠加深夜孤独场景,商业插入易越界。改推柔光歌单,作为画面延展而非中断。"
+    },
+    "executive_female_40_normal": {
+      "decision": "show_ad",
+      "selected_brand": "御泉 · 限定干邑 XO",
+      "alternative_brands": ["香槟年份酒款", "高山乌龙茶"],
+      "ad_copy": "夜深了,只配最干净的那一杯。",
+      "voice_preset": "冷峻陈述型",
+      "scores": {
+        "scene_emotion_fit": 90,
+        "brand_tone_match": 91,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+172% vs 传统弹窗"
+      },
+      "reasoning": "高净值女性夜场偏向稀缺感与雅致克制,干邑/香槟优于大众威士忌。冷峻陈述声线契合「克制独处」气质,文案以「干净」呼应人设审美。",
+      "selected_surface": "吧台右侧空位"
+    },
+    "executive_female_40_emotional_fatigue": {
+      "decision": "content_switch",
+      "suggested_content": "《Blue Note · 都市夜爵士现场》",
+      "reason": "高净值疲劳期更敏感于商业冒犯,改投与场景同调的爵士现场内容,作为氛围延伸。"
+    }
+  }
+}

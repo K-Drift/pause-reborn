@@ -12,7 +12,7 @@
 【广告库】
 {ad_library_json}
 
-请按以下规则决策:
+请按以下规则决策(品牌匹配应优先参考 concrete_description 的具体画面内容,而非仅看 scene 大类标签):
 1. 如果场景 sensitivity 为 "high",输出 {"decision": "no_ad", "reason": "..."}
 2. 如果用户状态为 "emotional_fatigue",不出广告,改为推荐内容切换,输出 {"decision": "content_switch", "suggested_content": "...", "reason": "..."}
 3. 否则,输出完整广告决策:

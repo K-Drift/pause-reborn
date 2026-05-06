@@ -23,6 +23,7 @@ import uuid
 from pathlib import Path
 
 import httpx
+import json  # 临时:stage3 调试 print 需要
 
 PROMPTS_DIR = Path(__file__).resolve().parent.parent / "prompts"
 GEN_DIR = Path(__file__).resolve().parent.parent / "generated"
@@ -86,13 +87,20 @@ def generate_ad_image(scene: dict, decision: dict) -> dict:
     }
 
     url = base_url.rstrip("/") + "/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+    print("=" * 60)
+    print(f"[stage3 调试] 即将调用图像 API")
+    print(f"  URL: {url}")
+    print(f"  Headers: {headers}")
+    print(f"  Body: {json.dumps(payload, ensure_ascii=False, indent=2)[:1000]}")
+    print("=" * 60)
     with httpx.Client(timeout=180.0) as client:  # 文生图最长可能 40s,留足余量
         r = client.post(
             url,
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-            },
+            headers=headers,
             json=payload,
         )
 

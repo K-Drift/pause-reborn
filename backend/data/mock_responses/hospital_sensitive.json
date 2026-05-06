@@ -1,5 +1,6 @@
 {
   "scene": {
+    "concrete_description": "夜间病房床边静默,输液架与心电监护仪微光闪烁",
     "scene": "夜间病房",
     "characters": "床边静默",
     "emotion": ["沉重", "悲伤"],

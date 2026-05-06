@@ -1,6 +1,11 @@
-// Stage 8:四场景常量 — UI scene_id ↔ backend frame_id 的单一来源。
+// Stage 8.5:四场景常量 — UI scene_id ↔ backend frame_id 的单一来源。
 // UI 层只用 SceneId(bar/ancient/late-night/sensitive),
 // 调用 backend 时映射回 backendFrameId,与已有 mock_responses 文件名对齐。
+//
+// mockAdImage 是 Stage 8.5 新增:
+//   "AI 改造后"侧 complete 状态切换到的"融入版"整图(产品已嵌入剧情画面)。
+//   handcrafted 模式直接用它;real API 模式作为 stage3 失败的兜底。
+//   sensitive 场景走 restraint 短路,无 mockAdImage。
 
 export type SceneId = "bar" | "ancient" | "late-night" | "sensitive";
 
@@ -11,6 +16,7 @@ export interface SceneMeta {
   video: string;
   pauseFrame: string;
   currentAd: string;
+  mockAdImage?: string; // "融入版"整图,sensitive 不配
 }
 
 export const SCENES: SceneMeta[] = [
@@ -21,6 +27,7 @@ export const SCENES: SceneMeta[] = [
     video: "/videos/scene-bar.mp4",
     pauseFrame: "/pause-frames/frame-bar.png",
     currentAd: "/current-ads/tencent-ad-bar.png",
+    mockAdImage: "/mock-ad-images/mock-ad-bar.png",
   },
   {
     id: "ancient",
@@ -29,6 +36,7 @@ export const SCENES: SceneMeta[] = [
     video: "/videos/scene-ancient.mp4",
     pauseFrame: "/pause-frames/frame-ancient.png",
     currentAd: "/current-ads/tencent-ad-ancient.png",
+    mockAdImage: "/mock-ad-images/mock-ad-ancient.png",
   },
   {
     id: "late-night",
@@ -37,6 +45,7 @@ export const SCENES: SceneMeta[] = [
     video: "/videos/scene-late-night.mp4",
     pauseFrame: "/pause-frames/frame-late-night.png",
     currentAd: "/current-ads/tencent-ad-late-night.png",
+    mockAdImage: "/mock-ad-images/mock-ad-late-night.png",
   },
   {
     id: "sensitive",
@@ -44,7 +53,8 @@ export const SCENES: SceneMeta[] = [
     backendFrameId: "hospital_sensitive",
     video: "/videos/scene-sensitive.mp4",
     pauseFrame: "/pause-frames/frame-sensitive.png",
-    currentAd: "/current-ads/tencent-ad-sensitive.png",
+    currentAd: "/current-ads/tent-ad-sensitive.png",
+    // 敏感场景走 restraint 短路,无 mockAdImage
   },
 ];
 

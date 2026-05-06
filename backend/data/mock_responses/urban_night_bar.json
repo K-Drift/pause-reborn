@@ -1,5 +1,6 @@
 {
   "scene": {
+    "concrete_description": "一名男性独坐居酒屋吧台,杯中残酒,暖灯昏黄",
     "scene": "都市夜晚居酒屋",
     "characters": "男性独自饮酒",
     "emotion": ["孤独"],

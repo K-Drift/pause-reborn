@@ -28,6 +28,11 @@ export default function AIDecisionPanel({
   const isContentSwitch = decision?.decision === "content_switch";
   const isSilent =
     decision?.decision === "no_ad" || decision?.decision === "restraint";
+  // 后端 stage2 LLM 调用失败、已降级到 mock 时,decision 上会带 _ai_status="fallback"
+  const isFallback =
+    decision !== null &&
+    "_ai_status" in decision &&
+    decision._ai_status === "fallback";
 
   return (
     <aside className="flex h-full flex-col overflow-y-auto rounded-2xl bg-background-card p-6">
@@ -40,6 +45,13 @@ export default function AIDecisionPanel({
           AI 思考过程
         </div>
       </div>
+
+      {/* 降级提示:LLM 不可达时露出,告知用户当前为预设示例 */}
+      {isFallback && (
+        <div className="mb-3 inline-block rounded-md border border-amber-800/30 bg-amber-950/30 px-3 py-1.5 text-xs tracking-wide text-amber-300/70">
+          · AI 决策服务暂时不可达 · 当前为预设示例
+        </div>
+      )}
 
       {idle && (
         <div className="text-xs text-text-tertiary">
@@ -73,6 +85,7 @@ export default function AIDecisionPanel({
         {/* 静默模式:区块 2-5 全部隐藏 */}
         {!isSilent && paused && (
           <DecisionBlocks
+            sceneState={sceneState}
             sceneReady={sceneReady}
             decisionReady={decisionReady}
             decision={decision}
@@ -85,16 +98,26 @@ export default function AIDecisionPanel({
 }
 
 function DecisionBlocks({
+  sceneState,
   sceneReady,
   decisionReady,
   decision,
   isContentSwitch,
 }: {
+  sceneState: SceneState;
   sceneReady: boolean;
   decisionReady: boolean;
   decision: DecisionState["data"] | null;
   isContentSwitch: boolean;
 }) {
+  // Stage 8.5:植入位置 — 优先 LLM 输出的 selected_surface(若 stage2 真返回了),
+  // 否则降级到 VLM empty_surfaces[0]
+  const surfaceLabel =
+    (decision &&
+      decision.decision === "show_ad" &&
+      decision.selected_surface) ||
+    sceneState.data?.empty_surfaces?.[0] ||
+    "—";
   // stage1 还没完:不显示决策块
   if (!sceneReady) return null;
 
@@ -166,6 +189,14 @@ function DecisionBlocks({
             </div>
           </Section>
         </FadeIn>
+        <FadeIn delayMs={150}>
+          <Section title="植入位置">
+            <div className="text-sm text-text-primary">{surfaceLabel}</div>
+            <div className="mt-1 text-xs text-text-tertiary">
+              AI 在画面里挑选了这个位置叠加产品,而非弹窗强插
+            </div>
+          </Section>
+        </FadeIn>
         <FadeIn delayMs={200}>
           <Section title="契合度评分">
             <ScoresView ad={decision} />
@@ -191,16 +222,50 @@ function SceneFields({ scene }: { scene: SceneJSON }) {
     : scene.emotion;
   const surfaces =
     scene.empty_surfaces?.length > 0 ? scene.empty_surfaces.join(" · ") : "—";
+  // 新版 VLM 用 scene_category,旧 mock 用 scene;两边任取其一
+  const sceneLabel = scene.scene_category ?? scene.scene ?? "—";
   return (
-    <div className="grid grid-cols-[80px_1fr] gap-y-2">
-      <div className="text-sm text-text-tertiary">场景</div>
-      <div className="text-sm text-text-primary">{scene.scene}</div>
-      <div className="text-sm text-text-tertiary">情绪</div>
-      <div className="text-sm text-text-primary">{emotion}</div>
-      <div className="text-sm text-text-tertiary">色调</div>
-      <div className="text-sm text-text-primary">{scene.color_tone}</div>
-      <div className="text-sm text-text-tertiary">可植入</div>
-      <div className="text-sm text-text-primary">{surfaces}</div>
+    <div>
+      {/* 第一组:画面观察 - 让评委一眼看到 VLM 真的看见了画面里的具体内容 */}
+      <div className="grid grid-cols-[80px_1fr] gap-y-2">
+        {scene.concrete_description && (
+          <>
+            <div className="text-sm text-text-tertiary">画面</div>
+            {/* 画面字段强调:用 text-text-primary,其他字段用 text-text-secondary */}
+            <div className="text-sm text-text-primary">
+              {scene.concrete_description}
+            </div>
+          </>
+        )}
+        {scene.main_action && (
+          <>
+            <div className="text-sm text-text-tertiary">动作</div>
+            <div className="text-sm text-text-secondary">
+              {scene.main_action}
+            </div>
+          </>
+        )}
+        {scene.person_count !== undefined && scene.person_count !== "" && (
+          <>
+            <div className="text-sm text-text-tertiary">人数</div>
+            <div className="text-sm text-text-secondary">
+              {String(scene.person_count)}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* 分隔线 + 第二组:场景标签 - 用于品牌匹配的归类 */}
+      <div className="mt-3 grid grid-cols-[80px_1fr] gap-y-2 border-t border-border-subtle pt-3">
+        <div className="text-sm text-text-tertiary">场景</div>
+        <div className="text-sm text-text-secondary">{sceneLabel}</div>
+        <div className="text-sm text-text-tertiary">情绪</div>
+        <div className="text-sm text-text-secondary">{emotion}</div>
+        <div className="text-sm text-text-tertiary">色调</div>
+        <div className="text-sm text-text-secondary">{scene.color_tone}</div>
+        <div className="text-sm text-text-tertiary">可植入</div>
+        <div className="text-sm text-text-secondary">{surfaces}</div>
+      </div>
     </div>
   );
 }

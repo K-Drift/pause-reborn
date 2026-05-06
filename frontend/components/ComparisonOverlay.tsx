@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { SceneState, DecisionState, ImageState } from "@/app/page";
 import type { SceneMeta } from "@/lib/scenes";
@@ -12,9 +13,10 @@ interface Props {
   onResume: () => void;
 }
 
-// Stage 8:暂停后完全覆盖 VideoStage,左右各占 50%。
-// - 左侧"现状":腾讯视频原暂停广告截图
-// - 右侧"AI 改造后":依据决策类型渲染广告图 / 内容推荐卡 / 画面静默卡
+// Stage 8.5:左右各 50%,共用同一帧静帧底图。
+// 左侧:画面中央叠一张腾讯弹窗广告(红边、阴影、5 字小红点)。
+// 右侧:加载态用模糊脉动 + 文字提示;完成态把整张底图换成 mockAdImage 融入版,
+//       底部叠一行 ad_copy 文字浮在画面里。
 export default function ComparisonOverlay({
   scene,
   sceneState,
@@ -27,7 +29,6 @@ export default function ComparisonOverlay({
       className="absolute inset-0 z-10 cursor-default bg-background-base p-4"
       onClick={(e) => e.stopPropagation()}
     >
-      {/* 顶部右上角:恢复播放按钮 */}
       <button
         type="button"
         onClick={(e) => {
@@ -52,28 +53,68 @@ export default function ComparisonOverlay({
   );
 }
 
-function CurrentSide({ scene }: { scene: SceneMeta }) {
+// 通用框架:标题 + subtitle + 16:9 容器(子节点自由放层)
+function SideShell({
+  titleClass,
+  title,
+  subtitle,
+  children,
+  belowOverlay,
+}: {
+  titleClass: string;
+  title: string;
+  subtitle: string;
+  children: React.ReactNode;
+  belowOverlay?: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col">
       <div className="mb-2">
-        <div className="text-xs uppercase tracking-wider text-text-tertiary">
-          现状 · 腾讯视频暂停广告
+        <div className={`text-xs uppercase tracking-wider ${titleClass}`}>
+          {title}
         </div>
-        <div className="mt-0.5 text-xs text-text-tertiary">
-          花花绿绿,与剧情无关
-        </div>
+        <div className="mt-0.5 text-xs text-text-tertiary">{subtitle}</div>
       </div>
-      <div className="relative flex-1 overflow-hidden rounded-xl bg-background-card">
-        <Image
-          src={scene.currentAd}
-          alt="现状广告"
-          fill
-          priority
-          unoptimized
-          className="object-contain"
-        />
+      <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-background-card">
+        {children}
       </div>
+      {belowOverlay}
     </div>
+  );
+}
+
+function CurrentSide({ scene }: { scene: SceneMeta }) {
+  return (
+    <SideShell
+      title="现状 · 腾讯视频暂停广告"
+      subtitle="花花绿绿,与剧情无关"
+      titleClass="text-text-tertiary"
+    >
+      <Image
+        src={scene.pauseFrame}
+        alt="原始静帧"
+        fill
+        priority
+        unoptimized
+        className="object-cover"
+      />
+      {/* 整体压暗,模拟视频被弹窗打断的感觉 */}
+      <div className="pointer-events-none absolute inset-0 bg-black/30" />
+      {/* 中央叠加腾讯真实暂停广告 — 60% 宽,红边 + 强阴影 */}
+      <div className="absolute left-1/2 top-1/2 w-[60%] -translate-x-1/2 -translate-y-1/2">
+        <div
+          className="overflow-hidden rounded-md shadow-2xl shadow-black/60"
+          style={{ border: "1px solid rgba(255, 80, 80, 0.3)" }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={scene.currentAd}
+            alt="腾讯视频弹窗广告"
+            className="block h-auto w-full object-contain"
+          />
+        </div>
+      </div>
+    </SideShell>
   );
 }
 
@@ -88,146 +129,264 @@ function RebornSide({
   decisionState: DecisionState;
   imageState: ImageState;
 }) {
+  const decision =
+    decisionState.phase === "ready" ? decisionState.data ?? null : null;
+  // 融入版图源:优先 imageState.image_url(stage3 真结果或 handcrafted mock 路径),
+  // 否则降级到场景预设的 mockAdImage(real API 模式 + stage3 失败的兜底)
+  const fusedSrc = imageState.image_url ?? scene.mockAdImage ?? null;
+
+  // 加载条件:决策还没出 OR (是 show_ad 但图像段还没好)
+  const isLoading =
+    !decision ||
+    (decision.decision === "show_ad" && imageState.phase !== "ready");
+
   return (
-    <div className="flex flex-col">
-      <div className="mb-2">
-        <div className="text-xs uppercase tracking-wider text-accent-success">
-          AI 改造后 · PAUSE REBORN
-        </div>
-        <div className="mt-0.5 text-xs text-text-tertiary">
-          色调一致,旁白克制,融入画面
-        </div>
-      </div>
-      <div className="relative flex-1 overflow-hidden rounded-xl bg-background-card">
-        <RebornContent
-          scene={scene}
-          sceneState={sceneState}
-          decisionState={decisionState}
-          imageState={imageState}
-        />
-      </div>
-    </div>
-  );
-}
-
-function RebornContent({
-  scene,
-  sceneState,
-  decisionState,
-  imageState,
-}: {
-  scene: SceneMeta;
-  sceneState: SceneState;
-  decisionState: DecisionState;
-  imageState: ImageState;
-}) {
-  // 场景未到 / 决策未到:整体骨架屏
-  if (sceneState.phase !== "ready" || decisionState.phase !== "ready") {
-    return <RebornSkeleton />;
-  }
-
-  const decision = decisionState.data!;
-
-  // 克制模式(前端短路 restraint OR 后端 no_ad)
-  if (decision.decision === "restraint" || decision.decision === "no_ad") {
-    return <SilentCard />;
-  }
-
-  // 陪伴模式
-  if (decision.decision === "content_switch") {
-    return (
-      <ContentSwitchCard
-        suggested={decision.suggested_content}
-        reason={decision.reason}
-      />
-    );
-  }
-
-  // show_ad:等图像段
-  if (imageState.phase !== "ready") {
-    return <RebornSkeleton />;
-  }
-  if (imageState.image_url) {
-    return (
-      <div className="relative h-full w-full">
-        <Image
-          src={imageState.image_url}
-          alt={decision.selected_brand}
-          fill
-          unoptimized
-          className="object-contain"
-        />
-      </div>
-    );
-  }
-  // 图像段无 url 兜底:用暂停帧 + 文案叠加
-  return (
-    <div className="relative h-full w-full">
+    <SideShell
+      title="AI 改造后 · PAUSE REBORN"
+      subtitle="融入画面,克制旁白"
+      titleClass="text-accent-success"
+      belowOverlay={
+        imageState._ai_status === "fallback" ? (
+          <div className="mt-2 inline-block self-start rounded-md border border-amber-800/30 bg-amber-950/30 px-3 py-1.5 text-xs tracking-wide text-amber-300/70">
+            · 图像服务暂时不可达 · 当前为预设示例
+          </div>
+        ) : null
+      }
+    >
+      {/* 底层:始终是原始静帧 */}
       <Image
         src={scene.pauseFrame}
-        alt={scene.label}
+        alt="AI 改造对照底图"
         fill
+        priority
         unoptimized
-        className="object-cover opacity-80"
+        className="object-cover"
       />
-      <div className="absolute inset-x-6 bottom-6 rounded-lg bg-black/55 p-4 backdrop-blur-md">
-        <div className="text-xs uppercase tracking-wider text-text-secondary">
-          {decision.selected_brand}
-        </div>
-        <div className="mt-2 font-serif text-base text-text-primary">
-          {decision.ad_copy}
-        </div>
+
+      {/* 加载态:模糊脉动 dim + 三段加载文案 */}
+      {isLoading && (
+        <RebornLoadingLayer
+          sceneReady={sceneState.phase === "ready"}
+          decisionReady={decision !== null}
+        />
+      )}
+
+      {/* show_ad 完成 + 有融入版图:整张图淡入 + 微缩,覆盖底图。
+          文案不再叠在画面上(克制旁白),改由右侧 Decision Console 呈现。 */}
+      {decision &&
+        decision.decision === "show_ad" &&
+        imageState.phase === "ready" &&
+        fusedSrc && (
+          <FusedImageLayer src={fusedSrc} alt={decision.selected_brand} />
+        )}
+
+      {/* show_ad 完成 + 没图:兜底提示 */}
+      {decision &&
+        decision.decision === "show_ad" &&
+        imageState.phase === "ready" &&
+        !fusedSrc && (
+          <CenteredOverlay>
+            <FadeInUp>
+              <NotGeneratedNotice />
+            </FadeInUp>
+          </CenteredOverlay>
+        )}
+
+      {/* 克制 / 静默:与左侧腾讯广告对齐(60% 宽)的深蓝海报 */}
+      {decision &&
+        (decision.decision === "restraint" ||
+          decision.decision === "no_ad") && (
+          <SilentPoster />
+        )}
+
+      {/* 陪伴:暖金海报作为居中弹窗,尺寸与左侧腾讯广告对齐(60% 宽) */}
+      {decision && decision.decision === "content_switch" && (
+        <ContentSwitchPoster />
+      )}
+    </SideShell>
+  );
+}
+
+// 加载层:模糊脉动 dim + 三段加载文案(随 sceneReady / decisionReady 切换)
+function RebornLoadingLayer({
+  sceneReady,
+  decisionReady,
+}: {
+  sceneReady: boolean;
+  decisionReady: boolean;
+}) {
+  const text = !sceneReady
+    ? "正在阅读这一帧的情绪…"
+    : !decisionReady
+      ? "正在为你寻找合适的品牌…"
+      : "正在让产品自然融入画面…";
+  return (
+    <>
+      <div className="pointer-events-none absolute inset-0 animate-pulse bg-black/45" />
+      <CenteredOverlay>
+        <LoadingPill text={text} showSpinner />
+      </CenteredOverlay>
+    </>
+  );
+}
+
+// 完成态融入版整图:opacity 0→1 + scale 1.02→1,800ms ease-out
+function FusedImageLayer({ src, alt }: { src: string; alt: string }) {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      priority
+      unoptimized
+      className={
+        "object-cover transition-all duration-[800ms] ease-out " +
+        (shown ? "scale-100 opacity-100" : "scale-[1.02] opacity-0")
+      }
+    />
+  );
+}
+
+// 底部 12% 居中的 ad_copy 文字 — 图切完后再延 200ms fade-up
+function CenteredOverlay({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center">
+      {children}
+    </div>
+  );
+}
+
+
+// 陪伴海报:绝对定位居中,60% 宽,与左侧腾讯广告同尺寸;
+// 圆角阴影 + 600ms 淡入,图本身自带文案,无需额外叠字。
+function ContentSwitchPoster() {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  return (
+    <div
+      className={
+        "absolute left-1/2 top-1/2 w-[60%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-md shadow-2xl shadow-black/60 transition-opacity duration-[600ms] ease-out " +
+        (shown ? "opacity-100" : "opacity-0")
+      }
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/content-switch-cozy.png"
+        alt="今晚换个心情:温暖治愈纪录片或轻松陪伴综艺"
+        className="block h-auto w-full object-contain"
+      />
+    </div>
+  );
+}
+
+// 静默海报:绝对定位居中,60% 宽,与左侧腾讯广告同尺寸。
+// 半透明深蓝 + backdrop-blur,让底层病房画面透出来,避免硬色块的突兀感;
+// 衬线大字配宽字距,800ms 淡入。文案细节交给右侧 Decision Console。
+function SilentPoster() {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  return (
+    <div
+      className={
+        "absolute left-1/2 top-1/2 flex aspect-video w-[60%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-xl border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-2xl transition-opacity duration-[800ms] ease-out " +
+        (shown ? "opacity-100" : "opacity-0")
+      }
+      style={{
+        // 中心略亮、边缘更深的径向渐变 — 比纯色块柔和
+        backgroundImage:
+          "radial-gradient(ellipse at center, rgba(28,46,78,0.72) 0%, rgba(12,24,48,0.78) 70%, rgba(8,16,34,0.82) 100%)",
+      }}
+    >
+      <div
+        className="text-2xl text-slate-100/85 antialiased subpixel-antialiased md:text-3xl"
+        style={{
+          fontFamily:
+            '"Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif',
+          fontWeight: 300,
+          letterSpacing: "0.6em",
+          paddingLeft: "0.6em", // 抵消末字 letter-spacing 造成的右偏,让整体真正居中
+          textShadow: "0 1px 12px rgba(0,0,0,0.35)", // 柔化边缘,避免色边
+        }}
+      >
+        此刻静默
       </div>
     </div>
   );
 }
 
-function ContentSwitchCard({
-  suggested,
-  reason,
+function NotGeneratedNotice() {
+  return (
+    <div className="max-w-[60%] rounded-md border border-border-subtle bg-black/75 p-4 text-center shadow-[0_20px_60px_rgba(0,0,0,0.6)] backdrop-blur-md">
+      <div className="text-sm font-medium text-text-primary">
+        融入版图未生成
+      </div>
+      <div className="mt-1 text-[11px] text-text-tertiary">
+        当前场景缺少 mockAdImage,且 stage3 未返回有效图片
+      </div>
+    </div>
+  );
+}
+
+// 加载胶囊:深色半透明圆角胶囊 + 文字 + 旋转 SVG
+function LoadingPill({
+  text,
+  showSpinner = false,
 }: {
-  suggested: string;
-  reason: string;
+  text: string;
+  showSpinner?: boolean;
 }) {
   return (
-    <div className="flex h-full flex-col items-center justify-center bg-gradient-to-br from-amber-950/40 to-orange-950/40 p-8 text-center border border-amber-700/30 rounded-xl">
-      <div className="text-4xl">🌙</div>
-      <div className="mt-4 text-lg text-text-primary">
-        今晚看了很久,换个心情?
-      </div>
-      <div className="mt-3 text-base text-amber-200">{suggested}</div>
-      <div className="mt-2 max-w-sm text-sm text-text-secondary">{reason}</div>
-      <button
-        type="button"
-        onClick={(e) => e.stopPropagation()}
-        className="mt-6 rounded-full bg-amber-600 px-6 py-2 text-sm text-white transition-colors duration-200 hover:bg-amber-500"
-      >
-        切换观看
-      </button>
+    <div className="inline-flex items-center gap-2 rounded-full bg-black/60 px-5 py-2 backdrop-blur-md">
+      {showSpinner && (
+        <svg
+          className="h-3 w-3 animate-spin text-text-secondary"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray="40 60"
+          />
+        </svg>
+      )}
+      <span className="text-sm tracking-wide text-text-secondary">{text}</span>
     </div>
   );
 }
 
-function SilentCard() {
+// 卡片入场:opacity 0→1 + translateY 20px→0,600ms ease-out
+function FadeInUp({ children }: { children: React.ReactNode }) {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setShown(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
   return (
-    <div className="flex h-full flex-col items-center justify-center bg-background-base border border-border-subtle rounded-xl px-8 text-center">
-      <div className="text-2xl font-medium text-text-primary">
-        此刻,让画面静默。
-      </div>
-      <div className="mt-3 text-sm text-text-tertiary">
-        检测到沉重情绪场景,AI 选择不打扰。
-      </div>
-    </div>
-  );
-}
-
-function RebornSkeleton() {
-  return (
-    <div className="flex h-full flex-col justify-end gap-3 p-6">
-      <div className="h-2 w-[70%] animate-pulse rounded bg-background-elevated" />
-      <div className="h-2 w-[85%] animate-pulse rounded bg-background-elevated" />
-      <div className="h-2 w-[60%] animate-pulse rounded bg-background-elevated" />
-      <div className="h-2 w-[90%] animate-pulse rounded bg-background-elevated" />
+    <div
+      className={
+        "transition-all duration-[600ms] ease-out " +
+        (shown ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0")
+      }
+    >
+      {children}
     </div>
   );
 }
