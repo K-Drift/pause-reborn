@@ -45,3 +45,5 @@ backend/tests/_*.mp3
 # 本地 Agent 配置
 .claude/
 
+
+ppt/
