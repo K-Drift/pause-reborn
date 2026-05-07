@@ -1,17 +1,27 @@
 {
   "scene": {
-    "concrete_description": "夜间病房床边静默,输液架与心电监护仪微光闪烁",
-    "scene": "夜间病房",
-    "characters": "床边静默",
-    "emotion": ["沉重", "悲伤"],
-    "color_tone": "冷蓝灰低饱和",
-    "lighting": "单盏夜灯 + 仪器面光",
-    "objects": ["病床", "输液架", "心电监护仪"],
-    "empty_surfaces": ["床边推车", "墙面挂钩"],
+    "concrete_description": "老人病床上微笑,亲人床边握手对视,自然光柔和。",
+    "scene": "病房午后探视",
+    "characters": "老人与亲人",
+    "emotion": ["沉重", "甜蜜"],
+    "color_tone": "柔白冷调带暖肤色",
+    "lighting": "窗外自然光 + 床头柔光",
+    "objects": ["病床", "氧气管", "床头柜"],
+    "empty_surfaces": ["床头柜面", "窗台"],
     "sensitivity": "high"
   },
   "decision": {
-    "decision": "no_ad",
-    "reason": "病房场景情绪沉重,任何商业插入都会构成冒犯。系统进入克制模式:仅保留极简暂停界面与一句安静提示语,直至用户主动恢复播放。"
+    "decision": "show_ad",
+    "selected_brand": "腾讯视频 · 慢一刻",
+    "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+    "ad_copy": "这一刻,也很重要",
+    "voice_preset": "深夜电台型",
+    "scores": {
+      "scene_emotion_fit": 95,
+      "brand_tone_match": 94,
+      "user_disturbance": "low",
+      "predicted_attention_lift": "+62% vs 传统弹窗"
+    },
+    "reasoning": "病房探视是脆弱时刻,任何商品广告都构成冒犯。AI 选择以平台公益单元'慢一刻'出场:不卖货,只把'慢慢看,慢慢感受'作为陪伴底线写在窗光里,让品牌退到画面之外。"
   }
 }

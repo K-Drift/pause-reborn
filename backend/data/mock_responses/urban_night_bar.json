@@ -1,13 +1,15 @@
 {
   "scene": {
-    "concrete_description": "一名男性独坐居酒屋吧台,杯中残酒,暖灯昏黄",
-    "scene": "都市夜晚居酒屋",
-    "characters": "男性独自饮酒",
-    "emotion": ["孤独"],
-    "color_tone": "暖黄色低饱和",
+    "concrete_description": "4人在酒吧吧台前聚会，两人戴绿帽碰杯。",
+    "main_action": "举杯碰酒",
+    "person_count": 4,
+    "scene": "都市夜居酒屋",
+    "characters": "饮酒",
+    "emotion": ["欢乐", "庆祝"],
+    "color_tone": "暖橘色调",
     "lighting": "昏暗温暖,顶灯单点光源",
     "objects": ["吧台", "玻璃酒杯", "酒瓶"],
-    "empty_surfaces": ["吧台右侧空位", "酒杯旁台面"],
+    "empty_surfaces": ["木质吧台桌面"],
     "sensitivity": "low"
   },
   "decision": {
@@ -22,6 +24,6 @@
       "user_disturbance": "low",
       "predicted_attention_lift": "+184% vs 传统弹窗"
     },
-    "reasoning": "暖黄居酒屋 + 孤独情绪适配威士忌品类。深夜电台声线放大画面静默感,广告变成画外旁白而非弹窗,干扰极低。"
+    "reasoning": "暖橘居酒屋 + 庆祝氛围适配威士忌品类,4人举杯是自然的品牌出场契机。木质吧台桌面恰在视线焦点内,产品融入碰杯停顿而非打断画面,干扰极低。"
   }
 }

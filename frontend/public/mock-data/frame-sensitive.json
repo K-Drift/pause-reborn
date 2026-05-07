@@ -1,43 +1,109 @@
 {
   "scene": {
-    "concrete_description": "夜间病房床边静默,输液架与心电监护仪微光闪烁",
-    "scene_category": "夜间病房",
-    "scene": "夜间病房",
-    "person_count": 1,
-    "main_action": "床边静默",
-    "characters": "床边静默",
-    "emotion": ["沉重", "悲伤"],
-    "color_tone": "冷蓝灰低饱和",
-    "lighting": "单盏夜灯 + 仪器面光",
-    "key_objects": ["病床", "输液架", "心电监护仪"],
-    "objects": ["病床", "输液架", "心电监护仪"],
-    "empty_surfaces": ["床边推车", "墙面挂钩"],
+    "concrete_description": "老人病床上微笑,亲人床边握手对视,自然光柔和。",
+    "scene_category": "病房午后探视",
+    "scene": "病房午后探视",
+    "person_count": 2,
+    "main_action": "握手对视",
+    "characters": "老人与亲人",
+    "emotion": ["沉重", "甜蜜"],
+    "color_tone": "柔白冷调带暖肤色",
+    "lighting": "窗外自然光 + 床头柔光",
+    "key_objects": ["病床", "氧气管", "床头柜"],
+    "objects": ["病床", "氧气管", "床头柜"],
+    "empty_surfaces": ["床头柜面", "窗台"],
     "sensitivity": "high"
   },
   "decisions": {
     "urban_male_35_normal": {
-      "decision": "no_ad",
-      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+      "decision": "show_ad",
+      "selected_brand": "腾讯视频 · 慢一刻",
+      "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+      "ad_copy": "这一刻,也很重要",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 95,
+        "brand_tone_match": 94,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+62% vs 传统弹窗"
+      },
+      "reasoning": "病房探视是脆弱时刻,任何商品广告都构成冒犯。AI 选择以平台公益单元出场:不卖货,只把'慢慢看,慢慢感受'作为陪伴底线写在窗光里,让品牌退到画面之外。",
+      "selected_surface": "床头柜面"
     },
     "urban_male_35_emotional_fatigue": {
-      "decision": "no_ad",
-      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+      "decision": "show_ad",
+      "selected_brand": "腾讯视频 · 慢一刻",
+      "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+      "ad_copy": "这一刻,也很重要",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 96,
+        "brand_tone_match": 95,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+58% vs 传统弹窗"
+      },
+      "reasoning": "情绪疲劳叠加病房沉重感,商品广告会被读作冒犯。改用平台自有'慢一刻'公益单元,文案克制、声线压低,陪伴而不打扰。",
+      "selected_surface": "床头柜面"
     },
     "young_female_25_normal": {
-      "decision": "no_ad",
-      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+      "decision": "show_ad",
+      "selected_brand": "腾讯视频 · 慢一刻",
+      "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+      "ad_copy": "这一刻,也很重要",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 95,
+        "brand_tone_match": 94,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+64% vs 传统弹窗"
+      },
+      "reasoning": "握手对视的脆弱时刻,任何商业介入都是冒犯。AI 选择以平台公益单元'慢一刻'出场,让'慢慢看,慢慢感受'融进窗光,而非弹窗式打断。",
+      "selected_surface": "床头柜面"
     },
     "young_female_25_emotional_fatigue": {
-      "decision": "no_ad",
-      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+      "decision": "show_ad",
+      "selected_brand": "腾讯视频 · 慢一刻",
+      "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+      "ad_copy": "这一刻,也很重要",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 96,
+        "brand_tone_match": 95,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+60% vs 传统弹窗"
+      },
+      "reasoning": "情绪疲劳叠加病房沉重感,任何品牌叙事都易反弹。改用平台'慢一刻'公益单元,声线退到耳语,作为画面延展而非打断。",
+      "selected_surface": "床头柜面"
     },
     "executive_female_40_normal": {
-      "decision": "no_ad",
-      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+      "decision": "show_ad",
+      "selected_brand": "腾讯视频 · 慢一刻",
+      "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+      "ad_copy": "这一刻,也很重要",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 95,
+        "brand_tone_match": 94,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+66% vs 传统弹窗"
+      },
+      "reasoning": "高净值用户对商业冒犯尤其敏感,病房场景下任何商品广告都会被读作失礼。AI 改用平台'慢一刻'公益单元,克制旁白替代弹窗,品牌退到画面之外。",
+      "selected_surface": "床头柜面"
     },
     "executive_female_40_emotional_fatigue": {
-      "decision": "no_ad",
-      "reason": "检测到沉重情绪场景,AI 选择不打扰"
+      "decision": "show_ad",
+      "selected_brand": "腾讯视频 · 慢一刻",
+      "alternative_brands": ["和呼吸 · 正念课程", "云上慢游 · 时光录"],
+      "ad_copy": "这一刻,也很重要",
+      "voice_preset": "深夜电台型",
+      "scores": {
+        "scene_emotion_fit": 96,
+        "brand_tone_match": 95,
+        "user_disturbance": "low",
+        "predicted_attention_lift": "+59% vs 传统弹窗"
+      },
+      "reasoning": "情绪疲劳叠加病房沉重感,商业冒犯会被立刻反弹。AI 选择平台'慢一刻'公益单元,文案极简、声线压低,作为画面陪伴而非打断。",
+      "selected_surface": "床头柜面"
     }
   }
 }

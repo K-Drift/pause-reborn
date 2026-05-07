@@ -1,17 +1,17 @@
 {
   "scene": {
-    "concrete_description": "深夜室内独自面对屏幕,屏幕冷光打在桌面上",
-    "scene_category": "深夜公寓独处",
-    "scene": "深夜公寓独处",
+    "concrete_description": "深夜窗边独坐,头顶吊灯暖黄,身旁绿植在夜色里。",
+    "scene_category": "深夜窗边独处",
+    "scene": "深夜窗边独处",
     "person_count": 1,
-    "main_action": "独自面对屏幕",
-    "characters": "独自面对屏幕",
-    "emotion": ["孤独", "低落"],
-    "color_tone": "深紫黑带屏幕冷光",
-    "lighting": "屏幕单点光源 + 周遭幽暗",
-    "key_objects": ["显示器", "桌面", "椅背"],
-    "objects": ["显示器", "桌面", "椅背"],
-    "empty_surfaces": ["桌面右侧空地", "屏幕下方"],
+    "main_action": "窗边独坐",
+    "characters": "青年男性独坐",
+    "emotion": ["孤独"],
+    "color_tone": "暖黄低饱和带夜色",
+    "lighting": "吊灯单点光源 + 周遭幽暗",
+    "key_objects": ["窗框", "吊灯", "绿植"],
+    "objects": ["窗框", "吊灯", "绿植"],
+    "empty_surfaces": ["窗台木板", "灯下空位"],
     "sensitivity": "low"
   },
   "decisions": {
@@ -19,7 +19,7 @@
       "decision": "show_ad",
       "selected_brand": "夜息 · 助眠香薰",
       "alternative_brands": ["低咖啡因草本茶", "白噪音耳机"],
-      "ad_copy": "把屏幕关一会儿,屋子还在。",
+      "ad_copy": "灯下一刻,屋子还在。",
       "voice_preset": "深夜电台型",
       "scores": {
         "scene_emotion_fit": 87,
@@ -27,19 +27,19 @@
         "user_disturbance": "low",
         "predicted_attention_lift": "+147% vs 传统弹窗"
       },
-      "reasoning": "深夜独处带轻度低落,推助眠类陪伴型产品而非刺激消费。深夜电台声线维持私语感。",
-      "selected_surface": "桌面右侧空地"
+      "reasoning": "深夜独坐带轻度孤独,推助眠类陪伴型产品而非刺激消费。深夜电台声线维持窗边私语感。",
+      "selected_surface": "窗台木板"
     },
     "urban_male_35_emotional_fatigue": {
       "decision": "content_switch",
       "suggested_content": "《人生海海》播客 · 深夜电台特辑",
-      "reason": "情绪疲劳叠加深夜低落,任何消费提案都会越界。改推陪伴型电台播客,声线维持画面情绪。"
+      "reason": "情绪疲劳叠加深夜独处,任何消费提案都会越界。改推陪伴型电台播客,声线维持画面情绪。"
     },
     "young_female_25_normal": {
       "decision": "show_ad",
       "selected_brand": "晚安花园 · 安神花茶",
       "alternative_brands": ["蒸汽眼罩", "助眠精油"],
-      "ad_copy": "一杯花茶,把屏幕关掉。",
+      "ad_copy": "一杯花茶,把灯关掉。",
       "voice_preset": "深夜电台型",
       "scores": {
         "scene_emotion_fit": 88,
@@ -47,13 +47,13 @@
         "user_disturbance": "low",
         "predicted_attention_lift": "+158% vs 传统弹窗"
       },
-      "reasoning": "25 岁女性深夜场景偏好香氛 / 花茶等温柔品类。文案直接劝离屏幕,与产品功能形成自洽叙事。",
-      "selected_surface": "屏幕下方"
+      "reasoning": "25 岁女性深夜场景偏好香氛 / 花茶等温柔品类。文案直接劝离屏前停留,与产品功能形成自洽叙事。",
+      "selected_surface": "灯下空位"
     },
     "young_female_25_emotional_fatigue": {
       "decision": "content_switch",
       "suggested_content": "「晚安频道」歌单 · 入睡前 30 分钟版",
-      "reason": "深夜 + 低落 + 疲劳的三重叠加是商业内容的禁区。改推 30 分钟入睡歌单,功能性陪伴。"
+      "reason": "深夜 + 孤独 + 疲劳的三重叠加是商业内容的禁区。改推 30 分钟入睡歌单,功能性陪伴。"
     },
     "executive_female_40_normal": {
       "decision": "show_ad",
@@ -67,13 +67,13 @@
         "user_disturbance": "low",
         "predicted_attention_lift": "+165% vs 传统弹窗"
       },
-      "reasoning": "高净值女性的深夜独处偏好雅致仪式感产品。蜡烛/香氛是「克制独处」的物质载体,品牌叙事与场景同频。",
-      "selected_surface": "桌面右侧空地"
+      "reasoning": "高净值女性的深夜独处偏好雅致仪式感产品。蜡烛 / 香氛是「克制独处」的物质载体,品牌叙事与窗边场景同频。",
+      "selected_surface": "窗台木板"
     },
     "executive_female_40_emotional_fatigue": {
       "decision": "content_switch",
       "suggested_content": "《Slow TV · 北欧火炉之夜》8 小时版",
-      "reason": "高净值疲劳期更敏感,改投慢电视类长时陪伴内容,作为屏幕的安静替代而非新刺激。"
+      "reason": "高净值疲劳期更敏感,改投慢电视类长时陪伴内容,作为深夜窗边的安静替代而非新刺激。"
     }
   }
 }

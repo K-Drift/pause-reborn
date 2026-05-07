@@ -5,7 +5,6 @@
 // mockAdImage 是 Stage 8.5 新增:
 //   "AI 改造后"侧 complete 状态切换到的"融入版"整图(产品已嵌入剧情画面)。
 //   handcrafted 模式直接用它;real API 模式作为 stage3 失败的兜底。
-//   sensitive 场景走 restraint 短路,无 mockAdImage。
 
 export type SceneId = "bar" | "ancient" | "late-night" | "sensitive";
 
@@ -54,7 +53,7 @@ export const SCENES: SceneMeta[] = [
     video: "/videos/scene-sensitive.mp4",
     pauseFrame: "/pause-frames/frame-sensitive.png",
     currentAd: "/current-ads/tent-ad-sensitive.png",
-    // 敏感场景走 restraint 短路,无 mockAdImage
+    mockAdImage: "/mock-ad-images/mock-ad-sensitive.png",
   },
 ];
 

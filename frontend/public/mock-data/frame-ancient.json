@@ -1,17 +1,17 @@
 {
   "scene": {
-    "concrete_description": "宫装女子独立檐下,红灯笼下石阶生苔,月色微寒",
-    "scene_category": "古代庭院夜",
-    "scene": "古代庭院夜",
-    "person_count": 1,
-    "main_action": "独立檐下",
-    "characters": "宫装女子独立檐下",
-    "emotion": ["悬疑", "孤独"],
-    "color_tone": "冷蓝低饱和带朱红点缀",
-    "lighting": "灯笼局部暖光 + 月色冷面",
-    "key_objects": ["屋檐瓦当", "红灯笼", "石阶"],
-    "objects": ["屋檐瓦当", "红灯笼", "石阶"],
-    "empty_surfaces": ["檐下木桌", "石阶左侧空地"],
+    "concrete_description": "两位汉服少女在柳荫下池边静坐,粉紫衣裙映水。",
+    "scene_category": "古风园林午后",
+    "scene": "古风园林午后",
+    "person_count": 2,
+    "main_action": "池边静坐",
+    "characters": "汉服少女结伴",
+    "emotion": ["轻松", "甜蜜"],
+    "color_tone": "粉紫柔光带柳影绿",
+    "lighting": "柳叶斜光 + 水面反光",
+    "key_objects": ["柳条", "池水", "石阶"],
+    "objects": ["柳条", "池水", "石阶"],
+    "empty_surfaces": ["池边石阶", "柳下空地"],
     "sensitivity": "low"
   },
   "decisions": {
@@ -19,7 +19,7 @@
       "decision": "show_ad",
       "selected_brand": "云隐 · 古法白茶",
       "alternative_brands": ["檀香木雅扇", "线装诗笺"],
-      "ad_copy": "一盏灯,半盏茶,不语。",
+      "ad_copy": "柳下半盏白茶,把午后留住。",
       "voice_preset": "古风旁白型",
       "scores": {
         "scene_emotion_fit": 89,
@@ -27,19 +27,19 @@
         "user_disturbance": "low",
         "predicted_attention_lift": "+162% vs 传统弹窗"
       },
-      "reasoning": "古风冷调宜茶不宜酒。古风旁白声线与檐下场景同呼吸,文案七字成韵,延续戏剧情绪而非打断。",
-      "selected_surface": "檐下木桌"
+      "reasoning": "古风园林午后宜茶不宜酒。古风旁白声线与柳影池水同呼吸,文案七字成韵,延续画面的闲适感。",
+      "selected_surface": "池边石阶"
     },
     "urban_male_35_emotional_fatigue": {
       "decision": "content_switch",
-      "suggested_content": "《国家宝藏》宋代庭院专辑 · 静观篇",
-      "reason": "情绪疲劳期不宜介入消费决策,改推同朝代审美的纪录片片段,延展画面情绪。"
+      "suggested_content": "《国家宝藏》宋代庭院专辑 · 闲赏篇",
+      "reason": "情绪疲劳期不宜介入消费决策,改推同朝代审美的纪录片片段,延展画面的安静节奏。"
     },
     "young_female_25_normal": {
       "decision": "show_ad",
       "selected_brand": "栖月 · 古法手作香囊",
       "alternative_brands": ["国风口脂", "苏绣手帕"],
-      "ad_copy": "把月色,缝进衣襟里。",
+      "ad_copy": "把柳影,缝进衣襟里。",
       "voice_preset": "古风旁白型",
       "scores": {
         "scene_emotion_fit": 91,
@@ -47,19 +47,19 @@
         "user_disturbance": "low",
         "predicted_attention_lift": "+178% vs 传统弹窗"
       },
-      "reasoning": "国风女性向小众手作品类天然契合古庭夜色。香囊以「月色 → 衣襟」做意象转码,品牌与画面共写一句旁白。",
-      "selected_surface": "石阶左侧空地"
+      "reasoning": "国风女性向小众手作品类天然契合柳下池畔。香囊以「柳影 → 衣襟」做意象转码,品牌与画面共写一句旁白。",
+      "selected_surface": "柳下空地"
     },
     "young_female_25_emotional_fatigue": {
       "decision": "content_switch",
-      "suggested_content": "「古风轻音乐」歌单 · 檐下听雨版",
-      "reason": "情绪疲劳叠加悬疑情绪,任何品类介入都过重。改推同审美轻音乐,只做氛围托底。"
+      "suggested_content": "「古风轻音乐」歌单 · 柳下听水版",
+      "reason": "情绪疲劳叠加低能耗画面,任何品类介入都过重。改推同审美轻音乐,只做氛围托底。"
     },
     "executive_female_40_normal": {
       "decision": "show_ad",
       "selected_brand": "止水 · 宋瓷孤品茶器",
       "alternative_brands": ["檀木镇尺", "明式书房灯"],
-      "ad_copy": "器不多言,灯下自鸣。",
+      "ad_copy": "器不多言,水边自鸣。",
       "voice_preset": "古风旁白型",
       "scores": {
         "scene_emotion_fit": 93,
@@ -67,13 +67,13 @@
         "user_disturbance": "low",
         "predicted_attention_lift": "+196% vs 传统弹窗"
       },
-      "reasoning": "高净值女性的古风偏好导向稀缺手作器物。「器不多言」呼应人设克制审美,品牌价值与场景气质共振。",
-      "selected_surface": "檐下木桌"
+      "reasoning": "高净值女性的古风偏好导向稀缺手作器物。「器不多言」呼应人设克制审美,与池畔静坐的留白共振。",
+      "selected_surface": "池边石阶"
     },
     "executive_female_40_emotional_fatigue": {
       "decision": "content_switch",
-      "suggested_content": "《故宫的物候》 · 庭院深秋篇",
-      "reason": "疲劳期不投商业,改投慢节奏文化纪录片,与场景同朝代同呼吸。"
+      "suggested_content": "《故宫的物候》 · 庭院初夏篇",
+      "reason": "疲劳期不投商业,改投慢节奏文化纪录片,与画面同审美同呼吸。"
     }
   }
 }

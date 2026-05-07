@@ -1,20 +1,20 @@
 {
   "scene": {
-    "concrete_description": "宫装女子独立檐下,红灯笼下石阶生苔,月色微寒",
-    "scene": "古代庭院夜",
-    "characters": "宫装女子独立檐下",
-    "emotion": ["悬疑", "孤独"],
-    "color_tone": "冷蓝低饱和带朱红点缀",
-    "lighting": "灯笼局部暖光 + 月色冷面",
-    "objects": ["屋檐瓦当", "红灯笼", "石阶"],
-    "empty_surfaces": ["檐下木桌", "石阶左侧空地"],
+    "concrete_description": "两位汉服少女在柳荫下池边静坐,粉紫衣裙映水。",
+    "scene": "古风园林午后",
+    "characters": "汉服少女结伴",
+    "emotion": ["轻松", "甜蜜"],
+    "color_tone": "粉紫柔光带柳影绿",
+    "lighting": "柳叶斜光 + 水面反光",
+    "objects": ["柳条", "池水", "石阶"],
+    "empty_surfaces": ["池边石阶", "柳下空地"],
     "sensitivity": "low"
   },
   "decision": {
     "decision": "show_ad",
     "selected_brand": "云隐 · 古法白茶",
     "alternative_brands": ["檀香木雅扇", "线装诗笺"],
-    "ad_copy": "一盏灯,半盏茶,不语。",
+    "ad_copy": "柳下半盏白茶,把午后留住。",
     "voice_preset": "古风旁白型",
     "scores": {
       "scene_emotion_fit": 89,
@@ -22,6 +22,6 @@
       "user_disturbance": "low",
       "predicted_attention_lift": "+162% vs 传统弹窗"
     },
-    "reasoning": "古风冷调宜茶不宜酒。古风旁白声线与檐下场景同呼吸,文案七字成韵,延续戏剧情绪而非打断。"
+    "reasoning": "古风园林午后宜茶不宜酒。古风旁白声线与柳影池水同呼吸,文案七字成韵,延续画面的闲适感。"
   }
 }

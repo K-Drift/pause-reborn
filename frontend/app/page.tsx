@@ -22,7 +22,7 @@ import {
 } from "@/lib/scenes";
 
 // Stage 8:整页驾驶舱布局 + 三段流水线 + 防竞态。
-// 流水线逻辑沿用 Stage 5 的 AbortController + scene 缓存 + 敏感熔断。
+// 流水线逻辑沿用 Stage 5 的 AbortController + scene 缓存。
 // USE_HANDCRAFTED_ADS=true 时三段全部走 public/mock-data/*.json,分支已下沉到 lib/api.ts。
 type Phase = "idle" | "loading" | "ready" | "error";
 
@@ -102,20 +102,6 @@ export default function Home() {
           setSceneState({ phase: "error" });
           return;
         }
-      }
-
-      // ── Stage 7:敏感场景熔断,前端构造 RestraintModeDecision ──
-      if (sceneJson!.sensitivity === "high") {
-        setDecisionState({
-          phase: "ready",
-          data: {
-            decision: "restraint",
-            reason: "sensitivity=high,前端短路,未调用 stage2 / stage3",
-          },
-          source: "skipped",
-        });
-        setImageState({ phase: "ready", image_url: null, source: "skipped" });
-        return;
       }
 
       // ── Stage 2:LLM 广告决策 ──

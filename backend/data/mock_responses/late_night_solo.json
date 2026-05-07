@@ -1,20 +1,20 @@
 {
   "scene": {
-    "concrete_description": "深夜室内独自面对屏幕,屏幕冷光打在桌面上",
-    "scene": "深夜公寓独处",
-    "characters": "独自面对屏幕",
-    "emotion": ["孤独", "低落"],
-    "color_tone": "深紫黑带屏幕冷光",
-    "lighting": "屏幕单点光源 + 周遭幽暗",
-    "objects": ["显示器", "桌面", "椅背"],
-    "empty_surfaces": ["桌面右侧空地", "屏幕下方"],
+    "concrete_description": "深夜窗边独坐,头顶吊灯暖黄,身旁绿植在夜色里。",
+    "scene": "深夜窗边独处",
+    "characters": "青年男性独坐",
+    "emotion": ["孤独"],
+    "color_tone": "暖黄低饱和带夜色",
+    "lighting": "吊灯单点光源 + 周遭幽暗",
+    "objects": ["窗框", "吊灯", "绿植"],
+    "empty_surfaces": ["窗台木板", "灯下空位"],
     "sensitivity": "low"
   },
   "decision": {
     "decision": "show_ad",
     "selected_brand": "夜息 · 助眠香薰",
     "alternative_brands": ["低咖啡因草本茶", "白噪音耳机"],
-    "ad_copy": "把屏幕关一会儿,屋子还在。",
+    "ad_copy": "灯下一刻,屋子还在。",
     "voice_preset": "深夜电台型",
     "scores": {
       "scene_emotion_fit": 87,
@@ -22,6 +22,6 @@
       "user_disturbance": "low",
       "predicted_attention_lift": "+147% vs 传统弹窗"
     },
-    "reasoning": "深夜独处带轻度低落,推助眠类陪伴型产品而非刺激消费。深夜电台声线维持私语感;Stage 3 在情绪疲劳累积状态下,本帧将切换为内容推荐。"
+    "reasoning": "深夜独坐带轻度孤独,推助眠类陪伴型产品而非刺激消费。深夜电台声线维持窗边私语感;Stage 3 在情绪疲劳累积状态下,本帧将切换为内容推荐。"
   }
 }

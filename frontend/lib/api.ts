@@ -21,12 +21,12 @@ const FRAME_ID_TO_MOCK_KEY: Record<string, string> = {
   hospital_sensitive: "frame-sensitive",
 };
 
-// frame_id ↔ public/mock-ad-images 路径,sensitive 走 restraint 不需要图
+// frame_id ↔ public/mock-ad-images 路径
 const FRAME_ID_TO_MOCK_AD: Record<string, string | null> = {
   urban_night_bar: "/mock-ad-images/mock-ad-bar.png",
   palace_ancient: "/mock-ad-images/mock-ad-ancient.png",
   late_night_solo: "/mock-ad-images/mock-ad-late-night.png",
-  hospital_sensitive: null,
+  hospital_sensitive: "/mock-ad-images/mock-ad-sensitive.png",
 };
 
 interface MockBundle {
