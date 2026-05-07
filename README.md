@@ -4,9 +4,7 @@
 
 ## 演示
 
-- 在线体验:[Vercel 链接,待填]
-- 演示视频:[B 站链接,待填]
-- 项目说明:[PDF 链接,待填]
+- 在线体验:https://pause-reborn.vercel.app/
 
 ## 技术栈
 
