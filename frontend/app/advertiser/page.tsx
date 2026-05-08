@@ -8,6 +8,7 @@ import {
   getBrandDashboard,
 } from "@/lib/mock-dashboard";
 import BrandPicker from "@/components/advertiser/BrandPicker";
+import BrandMonogram from "@/components/advertiser/BrandMonogram";
 import KPIRow from "@/components/advertiser/KPIRow";
 import SceneFitHistogram from "@/components/advertiser/SceneFitHistogram";
 import RASTrendLine from "@/components/advertiser/RASTrendLine";
@@ -15,8 +16,7 @@ import FeedbackList from "@/components/advertiser/FeedbackList";
 import BrandFitNarrative from "@/components/advertiser/BrandFitNarrative";
 
 // Stage 9.C:品牌主 Dashboard
-// B 端 SaaS mock 页面,延用 dark 主题,仅以 "B 端 · 品牌主控台" 眉头标签做轻区分
-// 全部数据来自 lib/mock-dashboard.ts(确定性 LCG,同品牌每次刷新一致)
+// Stage 9.D:视觉精修 — 加 monogram hero,章节用 01/02/03/04 节奏标号,渐变分隔线
 export default function AdvertiserPage() {
   const [brandId, setBrandId] = useState<string>(DEFAULT_BRAND_ID);
   const data = getBrandDashboard(brandId);
@@ -53,46 +53,65 @@ export default function AdvertiserPage() {
           B 端 · 品牌主控台
         </div>
 
-        {/* 品牌选择 + 品牌名 hero */}
-        <div className="mt-3 flex flex-col gap-4 border-b border-border-subtle pb-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <BrandPicker value={brandId} onChange={setBrandId} />
-            <div className="mt-4 flex items-baseline gap-3">
-              <h2 className="text-3xl font-medium text-text-primary">
-                {brandMeta.brand}
-              </h2>
-              <span className="text-sm text-text-tertiary">
-                · {brandMeta.category}
-              </span>
+        {/* 品牌 hero:monogram + 品牌名 + 品类 pill;BrandPicker 移到右侧 */}
+        <div className="mt-3 flex flex-col gap-5 pb-7 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-4">
+            <BrandMonogram brand={brandMeta.brand} />
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-3xl font-medium leading-tight text-text-primary">
+                  {brandMeta.brand}
+                </h2>
+                <span className="rounded-full border border-border-default bg-background-elevated px-2.5 py-0.5 text-[11px] text-text-secondary">
+                  {brandMeta.category}
+                </span>
+              </div>
+              <div className="mt-2 flex items-center gap-1.5 text-[11px] text-text-tertiary">
+                <span className="inline-block h-1 w-1 rounded-full bg-accent-success/60" />
+                数据样本:近 30 天 · Demo 演示用 · 全部为模拟数据
+              </div>
             </div>
           </div>
-          <div className="text-xs text-text-tertiary md:text-right">
-            数据样本:近 30 天 / Demo 演示用 · 全部为模拟数据
+          <BrandPicker value={brandId} onChange={setBrandId} />
+        </div>
+
+        {/* 渐变细线分隔 */}
+        <div className="h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
+
+        {/* 01 投放表现 */}
+        <div className="mt-8">
+          <SectionHeader index="01" title="投放表现" />
+          <div className="mt-4">
+            <KPIRow data={data} />
           </div>
         </div>
 
-        {/* KPI 行 */}
-        <div className="mt-6">
-          <KPIRow data={data} />
+        {/* 02 场景画像 */}
+        <div className="mt-12">
+          <SectionHeader index="02" title="场景画像" />
+          <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <SceneFitHistogram data={data} />
+            <RASTrendLine data={data} />
+          </div>
         </div>
 
-        {/* 双列:直方图 + 趋势线 */}
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <SceneFitHistogram data={data} />
-          <RASTrendLine data={data} />
+        {/* 03 用户反馈 */}
+        <div className="mt-12">
+          <SectionHeader index="03" title="用户反馈" />
+          <div className="mt-4">
+            <FeedbackList data={data} />
+          </div>
         </div>
 
-        {/* 用户反馈 */}
-        <div className="mt-6">
-          <FeedbackList data={data} />
+        {/* 04 AI 投放分析 */}
+        <div className="mt-12">
+          <SectionHeader index="04" title="AI 投放分析" />
+          <div className="mt-4">
+            <BrandFitNarrative data={data} />
+          </div>
         </div>
 
-        {/* AI 解释段落 */}
-        <div className="mt-6">
-          <BrandFitNarrative data={data} />
-        </div>
-
-        <div className="mt-10 border-t border-border-subtle pt-4 text-xs text-text-tertiary">
+        <div className="mt-12 border-t border-border-subtle pt-4 text-xs text-text-tertiary">
           演示数据 · 不代表真实投放表现 · RAS 公式见{" "}
           <a
             href="https://github.com/K-Drift/pause-reborn/blob/main/docs/RAS.md"
@@ -105,5 +124,16 @@ export default function AdvertiserPage() {
         </div>
       </main>
     </>
+  );
+}
+
+function SectionHeader({ index, title }: { index: string; title: string }) {
+  return (
+    <div className="flex items-baseline gap-3 border-b border-border-subtle pb-3">
+      <span className="font-mono text-xs tabular-nums text-text-tertiary">
+        / {index}
+      </span>
+      <span className="text-sm font-medium text-text-primary">{title}</span>
+    </div>
   );
 }
