@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { SceneJSON, ShowAdDecision } from "@/lib/types";
 import type { SceneState, DecisionState } from "@/app/page";
+import RASBadge from "@/components/RASBadge";
 
 interface Props {
   paused: boolean;
@@ -11,7 +12,8 @@ interface Props {
 }
 
 // Stage 8:右侧 AI 决策面板。
-// - 顶部 DECISION CONSOLE 标题
+// Stage 9.E:在顶部 DecisionTag 之后挂载 RAS 克制广告分徽章
+// - 顶部 DECISION CONSOLE 标题 + RAS 徽章
 // - 区块 1:场景理解 - stage1 ready 后淡入
 // - 区块 2-5:决策细节 - stage2 ready 后 staggered 淡入
 // - 特殊状态:content_switch / no_ad / restraint 显示对应顶部标签 + 隐藏部分区块
@@ -66,6 +68,9 @@ export default function AIDecisionPanel({
       {decisionReady && isSilent && (
         <DecisionTag>决策类型:克制模式 · 此刻不打扰</DecisionTag>
       )}
+
+      {/* Stage 9.E:RAS 克制广告分(决策就绪后展示) */}
+      {decisionReady && decision && <RASBadge decision={decision} />}
 
       <div className="space-y-6">
         {/* 区块 1:场景理解 */}
