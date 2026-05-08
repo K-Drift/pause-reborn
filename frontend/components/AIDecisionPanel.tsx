@@ -3,25 +3,45 @@
 import { useEffect, useState } from "react";
 import type { SceneJSON, ShowAdDecision } from "@/lib/types";
 import type { SceneState, DecisionState } from "@/app/page";
+import type { UserState } from "@/lib/personas";
 import RASBadge from "@/components/RASBadge";
+import DecisionPathGraph from "@/components/DecisionPathGraph";
+
+interface PersonaDisplay {
+  id: string;
+  label: string;
+  hint: string;
+}
 
 interface Props {
   paused: boolean;
   sceneState: SceneState;
   decisionState: DecisionState;
+  // Stage 9.B:决策推理图需要的额外上下文
+  frameId: string;
+  frameImageSrc: string;
+  persona: PersonaDisplay;
+  userState: UserState;
 }
 
+type PanelTab = "path" | "detail";
+
 // Stage 8:右侧 AI 决策面板。
-// Stage 9.E:在顶部 DecisionTag 之后挂载 RAS 克制广告分徽章
-// - 顶部 DECISION CONSOLE 标题 + RAS 徽章
-// - 区块 1:场景理解 - stage1 ready 后淡入
-// - 区块 2-5:决策细节 - stage2 ready 后 staggered 淡入
+// Stage 9.B:加 tabs(推理路径 | 决策详情),默认推理路径
+// - 顶部 DECISION CONSOLE 标题 + RAS 徽章 + tabs
+// - 推理路径 tab:DecisionPathGraph(状态层否决与分支扇出可视化)
+// - 决策详情 tab:原有 5 个 Section(场景理解 / 选中品牌 / 文案声线 / 评分 / 理由)
 // - 特殊状态:content_switch / no_ad / restraint 显示对应顶部标签 + 隐藏部分区块
 export default function AIDecisionPanel({
   paused,
   sceneState,
   decisionState,
+  frameId,
+  frameImageSrc,
+  persona,
+  userState,
 }: Props) {
+  const [tab, setTab] = useState<PanelTab>("path");
   const sceneReady = sceneState.phase === "ready" && !!sceneState.data;
   const decisionReady = decisionState.phase === "ready" && !!decisionState.data;
   const idle = !paused && sceneState.phase === "idle";
@@ -72,9 +92,27 @@ export default function AIDecisionPanel({
       {/* Stage 9.E:RAS 克制广告分(决策就绪后展示) */}
       {decisionReady && decision && <RASBadge decision={decision} />}
 
-      <div className="space-y-6">
-        {/* 区块 1:场景理解 */}
-        {paused && (
+      {/* Stage 9.B:tabs 切换 — 推理路径 / 决策详情。仅暂停时展示 */}
+      {paused && <PanelTabs tab={tab} onChange={setTab} />}
+
+      {/* 推理路径 tab:决策机制可视化 */}
+      {paused && tab === "path" && (
+        <div className="mt-4">
+          <DecisionPathGraph
+            frameId={frameId}
+            frameImageSrc={frameImageSrc}
+            scene={sceneReady ? sceneState.data! : null}
+            decision={decision}
+            persona={persona}
+            userState={userState}
+          />
+        </div>
+      )}
+
+      {/* 决策详情 tab:原 5 个 Section */}
+      {paused && tab === "detail" && (
+        <div className="mt-4 space-y-6">
+          {/* 区块 1:场景理解 */}
           <Section title="场景理解(VLM)">
             {sceneReady ? (
               <FadeIn>
@@ -85,20 +123,55 @@ export default function AIDecisionPanel({
               <FieldSkeleton lines={4} />
             )}
           </Section>
-        )}
 
-        {/* 静默模式:区块 2-5 全部隐藏 */}
-        {!isSilent && paused && (
-          <DecisionBlocks
-            sceneState={sceneState}
-            sceneReady={sceneReady}
-            decisionReady={decisionReady}
-            decision={decision}
-            isContentSwitch={isContentSwitch}
-          />
-        )}
-      </div>
+          {/* 静默模式:区块 2-5 全部隐藏 */}
+          {!isSilent && (
+            <DecisionBlocks
+              sceneState={sceneState}
+              sceneReady={sceneReady}
+              decisionReady={decisionReady}
+              decision={decision}
+              isContentSwitch={isContentSwitch}
+            />
+          )}
+        </div>
+      )}
     </aside>
+  );
+}
+
+function PanelTabs({
+  tab,
+  onChange,
+}: {
+  tab: PanelTab;
+  onChange: (t: PanelTab) => void;
+}) {
+  const items: { id: PanelTab; label: string }[] = [
+    { id: "path", label: "推理路径" },
+    { id: "detail", label: "决策详情" },
+  ];
+  return (
+    <div className="inline-flex items-center gap-1 rounded-lg border border-border-subtle bg-background-elevated p-1">
+      {items.map((it) => {
+        const active = it.id === tab;
+        return (
+          <button
+            key={it.id}
+            type="button"
+            onClick={() => onChange(it.id)}
+            className={
+              "cursor-pointer rounded-md px-3 py-1 text-xs transition-all duration-200 " +
+              (active
+                ? "bg-background-card text-text-primary"
+                : "text-text-tertiary hover:text-text-secondary")
+            }
+          >
+            {it.label}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 

@@ -12,6 +12,7 @@ import type { Decision, SceneJSON, StageSource } from "@/lib/types";
 import {
   DEFAULT_PERSONA_ID,
   DEFAULT_USER_STATE,
+  PERSONAS,
   type UserState,
 } from "@/lib/personas";
 import {
@@ -204,6 +205,7 @@ export default function Home() {
   );
 
   const scene = getScene(sceneId);
+  const personaInfo = PERSONAS.find((p) => p.id === personaId) ?? PERSONAS[0];
 
   return (
     <>
@@ -243,6 +245,10 @@ export default function Home() {
             paused={paused}
             sceneState={sceneState}
             decisionState={decisionState}
+            frameId={scene.backendFrameId}
+            frameImageSrc={scene.pauseFrame}
+            persona={personaInfo}
+            userState={userState}
           />
         </section>
       </main>
