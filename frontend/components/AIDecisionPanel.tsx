@@ -294,58 +294,203 @@ function DecisionBlocks({
   return null;
 }
 
+// Stage 9.F:VLM 区块视觉重做
+//   - 画面/动作/人数 vs 场景/情绪/色调/可植入 两组各加 eyebrow 标题
+//   - 画面字段:斜体 + 大字号 + 左侧 brand-gradient 竖条(强调"AI 真看到了")
+//   - 场景:rounded chip
+//   - 情绪:emoji 前缀 + 文本
+//   - 色调:8×8 实心色块(由颜色关键字解析)+ 文本
+//   - 可植入:左侧 brand-from 竖条 + "决策锚点" 高亮(AI 选位的依据)
 function SceneFields({ scene }: { scene: SceneJSON }) {
-  const emotion = Array.isArray(scene.emotion)
+  const emotionRaw = Array.isArray(scene.emotion)
     ? scene.emotion.join(" · ")
-    : scene.emotion;
+    : scene.emotion ?? "";
   const surfaces =
     scene.empty_surfaces?.length > 0 ? scene.empty_surfaces.join(" · ") : "—";
-  // 新版 VLM 用 scene_category,旧 mock 用 scene;两边任取其一
   const sceneLabel = scene.scene_category ?? scene.scene ?? "—";
+  const colorTone = scene.color_tone ?? "—";
+
   return (
     <div>
-      {/* 第一组:画面观察 - 让评委一眼看到 VLM 真的看见了画面里的具体内容 */}
-      <div className="grid grid-cols-[80px_1fr] gap-y-2">
-        {scene.concrete_description && (
-          <>
-            <div className="text-sm text-text-tertiary">画面</div>
-            {/* 画面字段强调:用 text-text-primary,其他字段用 text-text-secondary */}
-            <div className="text-sm text-text-primary">
-              {scene.concrete_description}
+      {/* 第一组:画面观察 */}
+      <div>
+        <GroupEyebrow icon={<IconEye />} label="画面观察" />
+        <div className="mt-2 space-y-3">
+          {scene.concrete_description && (
+            <div className="border-l-2 border-accent-brand-from pl-3">
+              <FieldLabel>画面</FieldLabel>
+              <div className="mt-0.5 text-base italic leading-relaxed text-text-primary">
+                {scene.concrete_description}
+              </div>
             </div>
-          </>
-        )}
-        {scene.main_action && (
-          <>
-            <div className="text-sm text-text-tertiary">动作</div>
-            <div className="text-sm text-text-secondary">
-              {scene.main_action}
-            </div>
-          </>
-        )}
-        {scene.person_count !== undefined && scene.person_count !== "" && (
-          <>
-            <div className="text-sm text-text-tertiary">人数</div>
-            <div className="text-sm text-text-secondary">
-              {String(scene.person_count)}
-            </div>
-          </>
-        )}
+          )}
+          {scene.main_action && (
+            <FieldRow label="动作">
+              <span className="text-sm text-text-secondary">
+                {scene.main_action}
+              </span>
+            </FieldRow>
+          )}
+          {scene.person_count !== undefined && scene.person_count !== "" && (
+            <FieldRow label="人数">
+              <span className="font-mono text-sm tabular-nums text-text-secondary">
+                {String(scene.person_count)}
+              </span>
+              <span className="ml-1 text-xs text-text-tertiary">人</span>
+            </FieldRow>
+          )}
+        </div>
       </div>
 
-      {/* 分隔线 + 第二组:场景标签 - 用于品牌匹配的归类 */}
-      <div className="mt-3 grid grid-cols-[80px_1fr] gap-y-2 border-t border-border-subtle pt-3">
-        <div className="text-sm text-text-tertiary">场景</div>
-        <div className="text-sm text-text-secondary">{sceneLabel}</div>
-        <div className="text-sm text-text-tertiary">情绪</div>
-        <div className="text-sm text-text-secondary">{emotion}</div>
-        <div className="text-sm text-text-tertiary">色调</div>
-        <div className="text-sm text-text-secondary">{scene.color_tone}</div>
-        <div className="text-sm text-text-tertiary">可植入</div>
-        <div className="text-sm text-text-secondary">{surfaces}</div>
+      {/* 第二组:场景标签 */}
+      <div className="mt-5 border-t border-border-subtle pt-4">
+        <GroupEyebrow icon={<IconTag />} label="场景标签" />
+        <div className="mt-2 space-y-3">
+          <FieldRow label="场景">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border-default bg-background-elevated px-2.5 py-0.5 text-xs text-text-secondary">
+              <IconScene />
+              {sceneLabel}
+            </span>
+          </FieldRow>
+          <FieldRow label="情绪">
+            <span className="inline-flex items-center gap-1.5 text-sm text-text-secondary">
+              <span aria-hidden>{emotionEmoji(emotionRaw)}</span>
+              {emotionRaw || "—"}
+            </span>
+          </FieldRow>
+          <FieldRow label="色调">
+            <span className="inline-flex items-center gap-2 text-sm text-text-secondary">
+              <span
+                className="inline-block h-3 w-3 shrink-0 rounded-full ring-1 ring-inset ring-white/20"
+                style={{ background: parseColorTone(colorTone) }}
+                aria-hidden
+              />
+              {colorTone}
+            </span>
+          </FieldRow>
+          {/* 可植入:决策锚点 — 用 brand-from 竖条 + 微底色高亮 */}
+          <div className="border-l-2 border-accent-brand-from rounded-r bg-accent-brand-from/[0.06] px-3 py-2">
+            <div className="flex items-baseline justify-between">
+              <FieldLabel>可植入</FieldLabel>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-accent-brand-from/80">
+                决策锚点
+              </span>
+            </div>
+            <div className="mt-0.5 text-sm text-text-primary">{surfaces}</div>
+          </div>
+        </div>
       </div>
     </div>
   );
+}
+
+function GroupEyebrow({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <div className="flex items-center gap-1.5 text-text-tertiary">
+      <span aria-hidden>{icon}</span>
+      <span className="text-[10px] uppercase tracking-[0.2em]">{label}</span>
+    </div>
+  );
+}
+
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
+      {children}
+    </span>
+  );
+}
+
+function FieldRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="grid grid-cols-[64px_1fr] items-baseline gap-3">
+      <FieldLabel>{label}</FieldLabel>
+      <div>{children}</div>
+    </div>
+  );
+}
+
+// 12×12 inline icons
+function IconEye() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8 12 12.5 8 12.5 1.5 8 1.5 8z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <circle cx="8" cy="8" r="1.8" fill="currentColor" />
+    </svg>
+  );
+}
+function IconTag() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M2.5 2.5h5l6 6-5 5-6-6v-5z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <circle cx="5.5" cy="5.5" r="0.9" fill="currentColor" />
+    </svg>
+  );
+}
+function IconScene() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// 由情绪关键字粗略 map 一个 emoji,不命中时返回中性符号
+function emotionEmoji(s: string): string {
+  if (!s) return "·";
+  if (/欢乐|庆祝|喜悦|兴奋|甜|喜/.test(s)) return "🥂";
+  if (/孤独|沉重|哀|悲|忧/.test(s)) return "🌙";
+  if (/温馨|温暖|温情|安睡/.test(s)) return "☀";
+  if (/紧张|冲突|对峙|对决/.test(s)) return "⚡";
+  if (/禅意|雅致|沉静|宁静/.test(s)) return "🍃";
+  if (/神秘|阴/.test(s)) return "🌑";
+  if (/疲惫|疲倦/.test(s)) return "💤";
+  return "·";
+}
+
+// 由色调关键字解析为颜色值,用作色块。命中规则按从严到宽,fallback slate
+function parseColorTone(s: string): string {
+  const exactMap: Record<string, string> = {
+    暖橘: "#d97706",
+    暖金: "#eab308",
+    暖黄: "#facc15",
+    冷蓝: "#3b82f6",
+    深蓝: "#1d4ed8",
+    海蓝: "#0ea5e9",
+    青绿: "#10b981",
+    墨绿: "#166534",
+    灰白: "#cbd5e1",
+    暗灰: "#475569",
+  };
+  for (const key of Object.keys(exactMap)) {
+    if (s.startsWith(key) || s.includes(key)) return exactMap[key];
+  }
+  if (/暖|橘|金|黄/.test(s)) return "#d97706";
+  if (/冷|蓝/.test(s)) return "#3b82f6";
+  if (/绿/.test(s)) return "#22c55e";
+  if (/紫/.test(s)) return "#a855f7";
+  if (/红|粉/.test(s)) return "#ef4444";
+  if (/灰/.test(s)) return "#94a3b8";
+  if (/白/.test(s)) return "#e2e8f0";
+  if (/黑|暗/.test(s)) return "#1f2937";
+  return "#64748b";
 }
 
 function ScoresView({ ad }: { ad: ShowAdDecision }) {

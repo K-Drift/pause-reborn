@@ -35,9 +35,13 @@ export default function ComparisonOverlay({
           e.stopPropagation();
           onResume();
         }}
-        className="absolute right-4 top-4 z-20 text-xs text-text-tertiary transition-colors duration-200 hover:text-text-primary"
+        className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-md border border-border-default bg-background-elevated/90 px-3 py-1.5 text-xs text-text-secondary backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-success/50 hover:text-text-primary"
       >
-        ← 恢复播放
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+          <path d="M5 4l-3 4 3 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M2 8h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+        </svg>
+        恢复播放
       </button>
 
       <div className="grid h-full grid-cols-2 gap-4">
@@ -53,28 +57,20 @@ export default function ComparisonOverlay({
   );
 }
 
-// 通用框架:标题 + subtitle + 16:9 容器(子节点自由放层)
+// 通用框架:header(自由 ReactNode) + 16:9 容器(子节点自由放层)
+// Stage 9.F:把 title/subtitle/titleClass 三件套替换为单一 header slot,允许 BEFORE/AFTER 各自的 pill 排版
 function SideShell({
-  titleClass,
-  title,
-  subtitle,
+  header,
   children,
   belowOverlay,
 }: {
-  titleClass: string;
-  title: string;
-  subtitle: string;
+  header: React.ReactNode;
   children: React.ReactNode;
   belowOverlay?: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col">
-      <div className="mb-2">
-        <div className={`text-xs uppercase tracking-wider ${titleClass}`}>
-          {title}
-        </div>
-        <div className="mt-0.5 text-xs text-text-tertiary">{subtitle}</div>
-      </div>
+      <div className="mb-2">{header}</div>
       <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-background-card">
         {children}
       </div>
@@ -86,17 +82,30 @@ function SideShell({
 function CurrentSide({ scene }: { scene: SceneMeta }) {
   return (
     <SideShell
-      title="现状 · 腾讯视频暂停广告"
-      subtitle="花花绿绿,与剧情无关"
-      titleClass="text-text-tertiary"
+      header={
+        <>
+          <div className="inline-flex items-center gap-2">
+            <span className="rounded-full border border-amber-700/40 bg-amber-950/30 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.25em] text-amber-300/80">
+              BEFORE
+            </span>
+            <span className="text-xs text-text-tertiary">
+              现状 · 腾讯视频暂停广告
+            </span>
+          </div>
+          <div className="mt-1 text-sm italic text-text-tertiary/80">
+            花花绿绿,与剧情无关
+          </div>
+        </>
+      }
     >
+      {/* BEFORE 帧轻微降饱和、暗化,做出"被打断"的视觉钝感 */}
       <Image
         src={scene.pauseFrame}
         alt="原始静帧"
         fill
         priority
         unoptimized
-        className="object-cover"
+        className="object-cover saturate-75 brightness-95"
       />
       {/* 整体压暗,模拟视频被弹窗打断的感觉 */}
       <div className="pointer-events-none absolute inset-0 bg-black/30" />
@@ -142,9 +151,21 @@ function RebornSide({
 
   return (
     <SideShell
-      title="AI 改造后 · PAUSE REBORN"
-      subtitle="融入画面,克制旁白"
-      titleClass="text-accent-success"
+      header={
+        <>
+          <div className="inline-flex items-center gap-2">
+            <span className="rounded-full border border-accent-brand-from/40 bg-gradient-to-r from-accent-brand-from/15 to-accent-brand-to/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.25em] text-accent-brand-from">
+              AFTER
+            </span>
+            <span className="text-xs text-accent-success">
+              AI 改造后 · PAUSE REBORN
+            </span>
+          </div>
+          <div className="mt-1 text-sm italic text-text-secondary">
+            融入画面,克制旁白
+          </div>
+        </>
+      }
       belowOverlay={
         imageState._ai_status === "fallback" ? (
           <div className="mt-2 inline-block self-start rounded-md border border-amber-800/30 bg-amber-950/30 px-3 py-1.5 text-xs tracking-wide text-amber-300/70">

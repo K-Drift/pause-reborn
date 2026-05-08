@@ -4,7 +4,7 @@ import type { Decision } from "@/lib/types";
 import { computeRAS, type RASBreakdown, type RASTone } from "@/lib/ras";
 
 // Stage 9.E:RAS(克制广告分)展示徽章
-// 圆形 SVG 进度环 + 标签 + 4 项 breakdown(或 no_ad/content_switch 的解释文字)
+// Stage 9.F:breakdown 4 项升级 — 图标 + 分数自染色 + 更大字号
 // 公式定义见 docs/RAS.md
 
 interface Props {
@@ -64,7 +64,6 @@ function Ring({ score, tone }: { score: number | null; tone: RASTone }) {
 
   return (
     <svg width={size} height={size} className="shrink-0">
-      {/* 底层 track */}
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -73,7 +72,6 @@ function Ring({ score, tone }: { score: number | null; tone: RASTone }) {
         strokeWidth={stroke}
         fill="none"
       />
-      {/* 进度弧:score 为 null 时不画 */}
       {score !== null && (
         <circle
           cx={size / 2}
@@ -89,7 +87,6 @@ function Ring({ score, tone }: { score: number | null; tone: RASTone }) {
           style={{ transition: "stroke-dashoffset 700ms ease-out" }}
         />
       )}
-      {/* 中央数字 */}
       <text
         x={size / 2}
         y={size / 2 + 1}
@@ -108,32 +105,104 @@ function Ring({ score, tone }: { score: number | null; tone: RASTone }) {
   );
 }
 
+// Stage 9.F:每项分数按自身 tier 染色,一眼能看出哪项最弱
+//   ≥85 success / ≥70 brand-from / ≥55 amber / <55 muted
+function tierClasses(value: number): { text: string; bar: string } {
+  if (value >= 85) return { text: "text-accent-success", bar: "bg-accent-success" };
+  if (value >= 70) return { text: "text-accent-brand-from", bar: "bg-accent-brand-from" };
+  if (value >= 55) return { text: "text-accent-warning", bar: "bg-accent-warning" };
+  return { text: "text-text-tertiary", bar: "bg-text-tertiary/60" };
+}
+
 function BreakdownBars({ breakdown }: { breakdown: RASBreakdown }) {
-  const items: { label: string; value: number }[] = [
-    { label: "契合", value: breakdown.fit },
-    { label: "调性", value: breakdown.tone },
-    { label: "克制", value: breakdown.calm },
-    { label: "提升", value: breakdown.lift },
+  const items = [
+    { label: "契合", value: breakdown.fit, icon: <IconTarget /> },
+    { label: "调性", value: breakdown.tone, icon: <IconPalette /> },
+    { label: "克制", value: breakdown.calm, icon: <IconShield /> },
+    { label: "提升", value: breakdown.lift, icon: <IconTrendingUp /> },
   ];
   return (
-    <div className="mt-2 grid grid-cols-4 gap-2">
+    <div className="mt-3 grid grid-cols-4 gap-2.5">
       {items.map((it) => {
+        const v = Math.round(it.value);
         const pct = Math.max(0, Math.min(100, it.value));
+        const cls = tierClasses(it.value);
         return (
           <div key={it.label} className="flex flex-col gap-1">
+            <div className="flex items-baseline justify-between gap-1">
+              <span className={"shrink-0 " + cls.text} aria-hidden>
+                {it.icon}
+              </span>
+              <span className={"font-mono text-sm font-medium tabular-nums " + cls.text}>
+                {v}
+              </span>
+            </div>
             <div className="h-1 overflow-hidden rounded-full bg-background-card">
               <div
-                className="h-full rounded-full bg-accent-success transition-[width] duration-700 ease-out"
+                className={"h-full rounded-full transition-[width] duration-700 ease-out " + cls.bar}
                 style={{ width: `${pct}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-[10px] text-text-tertiary">
-              <span>{it.label}</span>
-              <span className="font-mono">{Math.round(it.value)}</span>
-            </div>
+            <span className="text-[10px] text-text-tertiary">{it.label}</span>
           </div>
         );
       })}
     </div>
+  );
+}
+
+// 12×12 inline SVG icons(currentColor)
+function IconTarget() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.4" />
+      <circle cx="8" cy="8" r="2.4" fill="currentColor" />
+    </svg>
+  );
+}
+function IconPalette() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M8 2.5a5.5 5.5 0 1 0 0 11c.6 0 1-.4 1-.9 0-.3-.2-.6-.4-.8-.2-.3-.4-.6-.4-.9 0-.5.4-.9.9-.9h1.4c1.6 0 2.9-1.3 2.9-2.9C13.4 4.1 11 2.5 8 2.5z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+      />
+      <circle cx="5" cy="6.5" r="0.8" fill="currentColor" />
+      <circle cx="7" cy="4.5" r="0.8" fill="currentColor" />
+      <circle cx="10" cy="5" r="0.8" fill="currentColor" />
+    </svg>
+  );
+}
+function IconShield() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M8 2 3 4v4.5C3 11.5 5 13.5 8 14.5c3-1 5-3 5-6V4l-5-2z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+function IconTrendingUp() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <path
+        d="M2 12l4-4 3 3 5-6"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 5h4v4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
