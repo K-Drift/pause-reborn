@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SceneSwitcher from "./SceneSwitcher";
 import PersonaSwitcher from "./PersonaSwitcher";
 import StateSwitcher from "./StateSwitcher";
@@ -41,6 +42,14 @@ export default function NavBar({
           <PersonaSwitcher value={personaId} onChange={onPersonaChange} />
           <div className="h-6 w-px bg-border-subtle" />
           <StateSwitcher value={userState} onChange={onUserStateChange} />
+          <div className="h-6 w-px bg-border-subtle" />
+          {/* Stage 9.C:跳转到品牌主 Dashboard(B 端视角) */}
+          <Link
+            href="/advertiser"
+            className="rounded-md border border-border-default bg-background-elevated px-3 py-1.5 text-xs text-text-secondary transition-colors hover:border-accent-brand-from hover:text-text-primary"
+          >
+            品牌主视角 →
+          </Link>
         </div>
       </div>
     </header>
