@@ -111,7 +111,7 @@ export default function AIDecisionPanel({
 
       {/* 决策详情 tab:原 5 个 Section */}
       {paused && tab === "detail" && (
-        <div className="mt-4 space-y-6">
+        <div className="mt-5 space-y-8">
           {/* 区块 1:场景理解 */}
           <Section title="场景理解(VLM)">
             {sceneReady ? (
@@ -152,7 +152,7 @@ function PanelTabs({
     { id: "detail", label: "决策详情" },
   ];
   return (
-    <div className="inline-flex items-center gap-1 rounded-lg border border-border-subtle bg-background-elevated p-1">
+    <div className="inline-flex items-center gap-0.5">
       {items.map((it) => {
         const active = it.id === tab;
         return (
@@ -161,10 +161,10 @@ function PanelTabs({
             type="button"
             onClick={() => onChange(it.id)}
             className={
-              "cursor-pointer rounded-md px-3 py-1 text-xs transition-all duration-200 " +
+              "cursor-pointer px-3 py-1 text-xs transition-all duration-200 " +
               (active
-                ? "bg-background-card text-text-primary"
-                : "text-text-tertiary hover:text-text-secondary")
+                ? "text-zinc-100"
+                : "text-zinc-600 hover:text-zinc-400")
             }
           >
             {it.label}
@@ -226,14 +226,14 @@ function DecisionBlocks({
       <>
         <FadeIn delayMs={0}>
           <Section title="推荐内容">
-            <div className="text-base font-medium text-text-primary">
+            <div className="text-base font-medium text-zinc-100">
               {decision.suggested_content}
             </div>
           </Section>
         </FadeIn>
         <FadeIn delayMs={100}>
           <Section title="推荐理由">
-            <div className="rounded-lg bg-background-elevated p-4 text-sm leading-relaxed text-text-secondary">
+            <div className="border-l-2 border-zinc-700 pl-3 text-sm leading-relaxed text-zinc-400">
               {decision.reason}
             </div>
           </Section>
@@ -247,11 +247,11 @@ function DecisionBlocks({
       <>
         <FadeIn delayMs={0}>
           <Section title="选中品牌">
-            <div className="text-base font-medium text-text-primary">
+            <div className="text-base font-medium text-zinc-100">
               {decision.selected_brand}
             </div>
             {decision.alternative_brands.length > 0 && (
-              <div className="mt-2 text-xs text-text-tertiary">
+              <div className="mt-2 text-xs text-zinc-500">
                 备选 · {decision.alternative_brands.join(" · ")}
               </div>
             )}
@@ -259,18 +259,20 @@ function DecisionBlocks({
         </FadeIn>
         <FadeIn delayMs={100}>
           <Section title="文案 & 声线">
-            <div className="border-l-2 border-accent-brand-from pl-3 italic font-medium text-base text-text-primary">
-              "{decision.ad_copy}"
-            </div>
-            <div className="mt-2 text-xs text-text-tertiary">
-              声线 · {decision.voice_preset}
+            <div className="border-l-2 border-zinc-700 pl-3">
+              <div className="font-serif text-base italic leading-relaxed text-zinc-100">
+                &ldquo;{decision.ad_copy}&rdquo;
+              </div>
+              <div className="mt-2 text-xs text-zinc-500">
+                声线 · {decision.voice_preset}
+              </div>
             </div>
           </Section>
         </FadeIn>
         <FadeIn delayMs={150}>
           <Section title="植入位置">
-            <div className="text-sm text-text-primary">{surfaceLabel}</div>
-            <div className="mt-1 text-xs text-text-tertiary">
+            <div className="text-sm font-medium text-zinc-100">{surfaceLabel}</div>
+            <div className="mt-1 text-xs text-zinc-500">
               AI 在画面里挑选了这个位置叠加产品,而非弹窗强插
             </div>
           </Section>
@@ -282,7 +284,7 @@ function DecisionBlocks({
         </FadeIn>
         <FadeIn delayMs={300}>
           <Section title="决策理由">
-            <div className="rounded-lg bg-background-elevated p-4 text-sm leading-relaxed text-text-secondary">
+            <div className="border-l-2 border-zinc-700 pl-3 text-sm leading-relaxed text-zinc-400">
               {decision.reasoning}
             </div>
           </Section>
@@ -317,23 +319,23 @@ function SceneFields({ scene }: { scene: SceneJSON }) {
         <GroupEyebrow icon={<IconEye />} label="画面观察" />
         <div className="mt-2 space-y-3">
           {scene.concrete_description && (
-            <div className="border-l-2 border-accent-brand-from pl-3">
+            <div className="border-l-2 border-zinc-700 pl-3">
               <FieldLabel>画面</FieldLabel>
-              <div className="mt-0.5 text-base italic leading-relaxed text-text-primary">
+              <div className="mt-0.5 font-serif text-base italic leading-relaxed text-zinc-100">
                 {scene.concrete_description}
               </div>
             </div>
           )}
           {scene.main_action && (
             <FieldRow label="动作">
-              <span className="text-sm text-text-secondary">
+              <span className="text-sm font-medium text-zinc-100">
                 {scene.main_action}
               </span>
             </FieldRow>
           )}
           {scene.person_count !== undefined && scene.person_count !== "" && (
             <FieldRow label="人数">
-              <span className="font-mono text-sm tabular-nums text-text-secondary">
+              <span className="font-mono text-sm font-medium tabular-nums text-zinc-100">
                 {String(scene.person_count)}
               </span>
               <span className="ml-1 text-xs text-text-tertiary">人</span>
@@ -343,40 +345,40 @@ function SceneFields({ scene }: { scene: SceneJSON }) {
       </div>
 
       {/* 第二组:场景标签 */}
-      <div className="mt-5 border-t border-border-subtle pt-4">
+      <div className="mt-6 border-t border-white/[0.06] pt-4">
         <GroupEyebrow icon={<IconTag />} label="场景标签" />
         <div className="mt-2 space-y-3">
           <FieldRow label="场景">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-border-default bg-background-elevated px-2.5 py-0.5 text-xs text-text-secondary">
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-100">
               <IconScene />
               {sceneLabel}
             </span>
           </FieldRow>
           <FieldRow label="情绪">
-            <span className="inline-flex items-center gap-1.5 text-sm text-text-secondary">
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-100">
               <span aria-hidden>{emotionEmoji(emotionRaw)}</span>
               {emotionRaw || "—"}
             </span>
           </FieldRow>
           <FieldRow label="色调">
-            <span className="inline-flex items-center gap-2 text-sm text-text-secondary">
+            <span className="inline-flex items-center gap-2 text-sm font-medium text-zinc-100">
               <span
-                className="inline-block h-3 w-3 shrink-0 rounded-full ring-1 ring-inset ring-white/20"
+                className="inline-block h-3 w-3 shrink-0 rounded-full ring-1 ring-inset ring-white/10"
                 style={{ background: parseColorTone(colorTone) }}
                 aria-hidden
               />
               {colorTone}
             </span>
           </FieldRow>
-          {/* 可植入:决策锚点 — 用 brand-from 竖条 + 微底色高亮 */}
-          <div className="border-l-2 border-accent-brand-from rounded-r bg-accent-brand-from/[0.06] px-3 py-2">
+          {/* 可植入:决策锚点 — 极细竖条 */}
+          <div className="border-l-2 border-zinc-700 pl-3">
             <div className="flex items-baseline justify-between">
               <FieldLabel>可植入</FieldLabel>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-accent-brand-from/80">
+              <span className="text-[10px] uppercase tracking-widest text-zinc-600">
                 决策锚点
               </span>
             </div>
-            <div className="mt-0.5 text-sm text-text-primary">{surfaces}</div>
+            <div className="mt-0.5 text-sm font-medium text-zinc-100">{surfaces}</div>
           </div>
         </div>
       </div>
@@ -386,7 +388,7 @@ function SceneFields({ scene }: { scene: SceneJSON }) {
 
 function GroupEyebrow({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="flex items-center gap-1.5 text-text-tertiary">
+    <div className="flex items-center gap-1.5 text-zinc-500">
       <span aria-hidden>{icon}</span>
       <span className="text-[10px] uppercase tracking-[0.2em]">{label}</span>
     </div>
@@ -395,7 +397,7 @@ function GroupEyebrow({ icon, label }: { icon: React.ReactNode; label: string })
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
+    <span className="text-xs text-zinc-500">
       {children}
     </span>
   );
@@ -409,7 +411,7 @@ function FieldRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid grid-cols-[64px_1fr] items-baseline gap-3">
+    <div className="grid grid-cols-[56px_1fr] items-baseline gap-2">
       <FieldLabel>{label}</FieldLabel>
       <div>{children}</div>
     </div>
@@ -519,8 +521,8 @@ function ScoresView({ ad }: { ad: ShowAdDecision }) {
         pct={disturbValue}
       />
       <div className="flex items-center justify-between">
-        <div className="text-xs text-text-tertiary">预测注意力捕获率</div>
-        <div className="text-xs font-mono text-text-secondary">
+        <div className="text-sm text-zinc-500">预测注意力捕获率</div>
+        <div className="text-sm font-medium font-mono text-zinc-200">
           {liftLabel} vs 传统弹窗
         </div>
       </div>
@@ -541,12 +543,12 @@ function ScoreRow({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <div className="text-xs text-text-tertiary">{label}</div>
-        <div className="text-xs font-mono text-text-primary">{value}</div>
+        <div className="text-sm text-zinc-500">{label}</div>
+        <div className="text-sm font-medium font-mono text-zinc-200">{value}</div>
       </div>
-      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-background-elevated">
+      <div className="mt-1.5 h-1 overflow-hidden bg-white/[0.06]">
         <div
-          className="h-full rounded-full bg-text-secondary/50 transition-[width] duration-700 ease-out"
+          className="h-full bg-zinc-500 transition-[width] duration-700 ease-out"
           style={{ width: `${clamped}%` }}
         />
       </div>
@@ -563,7 +565,7 @@ function Section({
 }) {
   return (
     <section>
-      <div className="text-xs uppercase tracking-wider text-text-tertiary">
+      <div className="text-sm text-zinc-500">
         {title}
       </div>
       <div className="mt-3">{children}</div>
@@ -573,7 +575,7 @@ function Section({
 
 function DecisionTag({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-4 inline-block rounded-full border border-amber-700/30 bg-amber-950/40 px-3 py-1.5 text-xs text-amber-200">
+    <div className="mb-4 text-xs text-zinc-500">
       {children}
     </div>
   );
@@ -582,11 +584,11 @@ function DecisionTag({ children }: { children: React.ReactNode }) {
 function FieldSkeleton({ lines = 3 }: { lines?: number }) {
   const widths = ["70%", "85%", "60%", "90%"];
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
-          className="h-3 animate-pulse rounded bg-background-elevated"
+          className="h-2.5 animate-pulse bg-white/[0.04]"
           style={{ width: widths[i % widths.length] }}
         />
       ))}
@@ -606,7 +608,7 @@ function CollapsibleJSON({ data }: { data: unknown }) {
         {open ? "▾" : "▸"} 完整 SceneJSON
       </button>
       {open && (
-        <pre className="mt-2 max-h-60 overflow-auto rounded-lg bg-background-elevated p-3 font-mono text-xs leading-relaxed text-text-secondary">
+        <pre className="mt-2 max-h-60 overflow-auto bg-white/[0.03] p-3 font-mono text-xs leading-relaxed text-zinc-500">
           {JSON.stringify(data, null, 2)}
         </pre>
       )}
