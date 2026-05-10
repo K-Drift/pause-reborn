@@ -31,12 +31,12 @@ export default function NavBar({
           <h1 className="text-3xl font-bold leading-none text-white/90">
             Pause Reborn
           </h1>
-          <span className="whitespace-nowrap text-xs text-zinc-500 mr-8">
+          <span className="whitespace-nowrap text-[10px] text-zinc-600 mr-8">
             腾讯视频暂停体验重塑系统
           </span>
         </div>
 
-        <div className="flex items-center gap-10">
+        <div className="flex min-w-0 items-center gap-10">
           <SceneSwitcher value={sceneId} onChange={onSceneChange} />
           <div className="h-5 w-px bg-white/10" />
           <PersonaSwitcher value={personaId} onChange={onPersonaChange} />
@@ -46,7 +46,7 @@ export default function NavBar({
           {/* Stage 9.C:跳转到品牌主 Dashboard(B 端视角) */}
           <Link
             href="/advertiser"
-            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 text-xs text-zinc-400 transition-all duration-300 ease-in-out hover:bg-white/[0.06] hover:text-zinc-200"
+            className="whitespace-nowrap shrink-0 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 text-xs text-zinc-400 transition-all duration-300 ease-in-out hover:bg-white/[0.06] hover:text-zinc-200"
           >
             品牌主视角 →
           </Link>
