@@ -8,8 +8,6 @@ interface Props {
   onChange: (id: SceneId) => void;
 }
 
-// 主按钮:elevated 底胶囊 + 标签 + 箭头。
-// 下拉:card 底 + shadow-2xl,选中项左侧 2px 品牌渐变细条。
 export default function SceneSwitcher({ value, onChange }: Props) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -27,20 +25,21 @@ export default function SceneSwitcher({ value, onChange }: Props) {
 
   return (
     <div ref={ref} className="relative">
+      {/* Trigger */}
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex items-center whitespace-nowrap gap-2 rounded-full bg-white/[0.04] px-5 py-2 text-sm text-zinc-300 transition-all duration-300 ease-in-out hover:bg-white/[0.08] hover:text-zinc-100"
+        className="flex items-center gap-2 bg-zinc-800/80 text-zinc-100 px-4 py-1.5 rounded-full cursor-pointer hover:bg-zinc-700/80 transition-colors"
       >
-        <span>{current.label}</span>
+        <span className="whitespace-nowrap text-sm">{current.label}</span>
         <svg
           width="10"
           height="10"
           viewBox="0 0 12 12"
           className={
-            "text-text-tertiary transition-transform duration-200 " +
+            "transition-transform duration-200 " +
             (open ? "rotate-180" : "")
           }
           aria-hidden="true"
@@ -54,43 +53,41 @@ export default function SceneSwitcher({ value, onChange }: Props) {
           />
         </svg>
       </button>
-      {open && (
-        <div
-          role="listbox"
-          className="absolute right-0 top-full z-50 mt-2 min-w-[200px] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0a0a0a] shadow-2xl backdrop-blur-md"
-        >
-          {SCENES.map((s) => {
-            const selected = s.id === value;
-            return (
-              <button
-                key={s.id}
-                type="button"
-                role="option"
-                aria-selected={selected}
-                onClick={() => {
-                  onChange(s.id);
-                  setOpen(false);
-                }}
-                className={
-                  "relative block w-full px-5 py-2.5 text-left text-sm transition-all duration-300 ease-in-out " +
-                  (selected
-                    ? "bg-white/[0.06] text-zinc-100"
-                    : "text-zinc-400 hover:bg-white/[0.03] hover:text-zinc-200")
-                }
-              >
-                {/* 选中态:左侧 2px 品牌渐变细条 */}
-                {selected && (
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-y-0 left-0 w-0.5 bg-gradient-to-b from-accent-brand-from to-accent-brand-to"
-                  />
-                )}
-                {s.label}
-              </button>
-            );
-          })}
-        </div>
-      )}
+
+      {/* Floating Panel */}
+      <div
+        role="listbox"
+        className={
+          "absolute top-[calc(100%+8px)] left-0 w-56 z-[9999] bg-[#0A0A0B]/80 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden transition-all duration-200 ease-out " +
+          (open
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-2 pointer-events-none")
+        }
+      >
+        {SCENES.map((s) => {
+          const selected = s.id === value;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              role="option"
+              aria-selected={selected}
+              onClick={() => {
+                onChange(s.id);
+                setOpen(false);
+              }}
+              className={
+                "block w-full text-left px-4 py-3 text-sm transition-colors duration-200 cursor-pointer " +
+                (selected
+                  ? "text-zinc-100 bg-white/5"
+                  : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100")
+              }
+            >
+              {s.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

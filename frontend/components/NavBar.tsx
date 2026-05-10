@@ -25,7 +25,7 @@ export default function NavBar({
   onUserStateChange,
 }: Props) {
   return (
-    <header className="sticky top-0 z-50 w-full flex items-center justify-between h-16 px-6 overflow-hidden bg-[#0A0A0B]">
+    <header className="sticky top-0 z-50 w-full flex items-center justify-between h-16 px-6 bg-[#0A0A0B]">
       {/* 左侧:Logo + 系统名 — 强制不压缩 */}
       <div className="flex items-center gap-4 shrink-0">
         <h1 className="text-xl font-bold text-white whitespace-nowrap">
