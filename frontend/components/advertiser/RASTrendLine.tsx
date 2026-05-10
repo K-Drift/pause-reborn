@@ -48,7 +48,7 @@ export default function RASTrendLine({ data }: Props) {
   const showPeak = peakIdx !== coords.length - 1;
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 backdrop-blur-sm">
+    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 hover:border-white/[0.10] hover:bg-white/[0.02] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
       <div className="flex items-baseline justify-between">
         <div>
           <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
@@ -129,7 +129,7 @@ export default function RASTrendLine({ data }: Props) {
           <polyline
             points={polyline}
             fill="none"
-            stroke="var(--color-accent-success)"
+            stroke="var(--color-text-secondary)"
             strokeWidth={1.8}
             strokeLinejoin="round"
             strokeLinecap="round"
@@ -142,8 +142,8 @@ export default function RASTrendLine({ data }: Props) {
               cx={peak.x}
               cy={peak.y}
               r={3}
-              fill="var(--color-accent-success)"
-              opacity="0.4"
+              fill="var(--color-text-secondary)"
+              opacity="0.35"
             />
           )}
 
@@ -152,15 +152,15 @@ export default function RASTrendLine({ data }: Props) {
             cx={last.x}
             cy={last.y}
             r={5}
-            fill="var(--color-accent-success)"
-            opacity="0.2"
+            fill="var(--color-text-secondary)"
+            opacity="0.15"
           />
           <circle
             cx={last.x}
             cy={last.y}
             r={3}
-            fill="var(--color-accent-success)"
-            opacity="0.85"
+            fill="var(--color-text-secondary)"
+            opacity="0.7"
           />
         </svg>
 

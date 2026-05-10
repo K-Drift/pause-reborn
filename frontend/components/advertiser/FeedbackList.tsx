@@ -16,7 +16,7 @@ export default function FeedbackList({ data }: Props) {
   const [headline, ...rest] = items;
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 backdrop-blur-sm">
+    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 hover:border-white/[0.10] hover:bg-white/[0.02] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
       <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
         用户主观接受度反馈
       </div>

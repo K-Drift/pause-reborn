@@ -57,7 +57,7 @@ export default function AIDecisionPanel({
     decision._ai_status === "fallback";
 
   return (
-    <aside className="flex h-full flex-col overflow-y-auto rounded-2xl border border-white/[0.06] bg-background-card/80 p-6 backdrop-blur-sm">
+    <aside className="flex h-full flex-col overflow-y-auto rounded-2xl border border-white/[0.06] bg-background-card/80 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm">
       {/* 顶部标题区 */}
       <div className="mb-6 border-b border-white/[0.06] pb-4">
         <div className="text-xs uppercase tracking-widest text-text-tertiary">

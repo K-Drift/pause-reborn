@@ -17,9 +17,9 @@
   --color-text-secondary: #8a8a8a;
   --color-text-tertiary: #555555;
 
-  /* 强调色 — 哑光琥珀 + 低饱和灰蓝 */
-  --color-accent-success: #b8965a;
-  --color-accent-warning: #c49a4e;
+  /* 强调色 — 冷凝灰蓝为主,amber 仅用于警告 */
+  --color-accent-success: #7a8a9a;
+  --color-accent-warning: #b08d57;
   --color-accent-brand-from: #6b7fa3;
   --color-accent-brand-to: #4e6a8a;
 }

@@ -15,7 +15,7 @@ export default function SceneFitHistogram({ data }: Props) {
   const passLineTop = 100 - 80;
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 backdrop-blur-sm">
+    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 hover:border-white/[0.10] hover:bg-white/[0.02] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
       <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
         场景契合度分布
       </div>
@@ -26,10 +26,10 @@ export default function SceneFitHistogram({ data }: Props) {
       <div className="relative mt-5 h-40">
         {/* 达标线:80 分参考 */}
         <div
-          className="pointer-events-none absolute inset-x-0 border-t border-dashed border-accent-success/20"
+          className="pointer-events-none absolute inset-x-0 border-t border-dashed border-white/[0.08]"
           style={{ top: `${passLineTop}%` }}
         >
-          <span className="absolute -top-3.5 right-0 text-[10px] text-accent-success/40">
+          <span className="absolute -top-3.5 right-0 text-[10px] text-text-tertiary/60">
             达标 80
           </span>
         </div>
@@ -49,7 +49,7 @@ export default function SceneFitHistogram({ data }: Props) {
                   {bar.score}
                 </div>
                 <div
-                  className="w-full rounded-t bg-accent-success transition-[height,opacity] duration-700 ease-out"
+                  className="w-full rounded-t bg-text-secondary transition-[height,opacity] duration-700 ease-out"
                   style={{ height: `${pct}%`, opacity: opacity * 0.85 }}
                 />
               </div>

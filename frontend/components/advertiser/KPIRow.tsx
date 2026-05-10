@@ -42,7 +42,7 @@ export default function KPIRow({ data }: Props) {
       {items.map((it) => (
         <div
           key={it.label}
-          className="group relative overflow-hidden rounded-xl border border-white/[0.06] bg-background-card/80 p-4 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/[0.10]"
+          className="group relative overflow-hidden rounded-xl border border-white/[0.06] bg-background-card/80 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white/[0.10] hover:bg-white/[0.02] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
         >
           {/* 左侧品牌渐变锚点 */}
           <div className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-accent-brand-from to-accent-brand-to opacity-60 transition-opacity duration-300 group-hover:opacity-100" />
@@ -59,7 +59,7 @@ export default function KPIRow({ data }: Props) {
             <div
               className={
                 "font-serif text-3xl font-medium tabular-nums leading-none " +
-                (it.accent ? "text-accent-success" : "text-text-primary")
+                (it.accent ? "text-text-secondary" : "text-text-primary")
               }
             >
               {it.value}

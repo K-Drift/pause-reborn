@@ -27,7 +27,7 @@ export default function RASBadge({ decision }: Props) {
   const result = computeRAS(decision);
 
   return (
-    <div className="mb-5 flex items-center gap-4 rounded-xl border border-white/[0.06] bg-background-elevated/80 p-4 backdrop-blur-sm">
+    <div className="mb-5 flex items-center gap-4 rounded-xl border border-white/[0.06] bg-background-elevated/80 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-all duration-300 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
       <Ring score={result.score} tone={result.tone} />
       <div className="min-w-0 flex-1">
         <div className="text-[10px] uppercase tracking-[0.2em] text-text-tertiary">
