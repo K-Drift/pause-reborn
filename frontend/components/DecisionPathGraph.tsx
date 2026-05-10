@@ -71,13 +71,12 @@ export default function DecisionPathGraph({
   return (
     <div className="relative pl-6">
       {/* 贯穿式主轴:从头到尾的极细暗线 */}
-      <div className="absolute left-[7px] top-2 bottom-2 w-px bg-white/[0.08]" />
+      <div className="absolute left-[5px] top-2 bottom-2 w-px bg-white/5" />
 
       {/* 节点 1:暂停帧 */}
       <TimelineNode
         title="暂停帧"
         subtitle="原始信号"
-        dotClass="bg-zinc-500"
       >
         <div className="flex items-center gap-3">
           {frameImageSrc && (
@@ -95,7 +94,6 @@ export default function DecisionPathGraph({
       <TimelineNode
         title="VLM 信号"
         subtitle="场景理解"
-        dotClass="bg-zinc-400"
       >
         {scene ? <VLMSignals scene={scene} /> : <Pending />}
       </TimelineNode>
@@ -104,7 +102,6 @@ export default function DecisionPathGraph({
       <TimelineNode
         title="画像匹配"
         subtitle="用户层"
-        dotClass="bg-zinc-400"
       >
         <div className="font-medium text-zinc-100">{persona.label}</div>
         <div className="mt-0.5 text-xs text-zinc-500">{persona.hint}</div>
@@ -114,13 +111,6 @@ export default function DecisionPathGraph({
       <TimelineNode
         title="状态层检查"
         subtitle="否决与改写"
-        dotClass={
-          stateOverride === "danger"
-            ? "bg-rose-400"
-            : stateOverride === "warning"
-              ? "bg-amber-400"
-              : "bg-zinc-300"
-        }
         active
       >
         <StateCheck sensitivity={sensitivity} userState={userState} />
@@ -158,22 +148,22 @@ function TimelineNode({
   title,
   subtitle,
   children,
-  dotClass,
   active = false,
 }: {
   title: string;
   subtitle?: string;
   children: React.ReactNode;
-  dotClass: string;
   active?: boolean;
 }) {
   return (
     <div className="relative pb-8 last:pb-0 transition-all duration-300 ease-in-out">
-      {/* 节点圆点:ring-4 ring-black 制造浮在轴线上的立体感 */}
+      {/* 节点圆点:未激活空心,激活实心发光 */}
       <div
         className={
-          "absolute -left-6 top-1 h-3.5 w-3.5 rounded-full ring-4 ring-[#09090b] " +
-          dotClass
+          "absolute -left-6 top-1.5 h-2 w-2 rounded-full " +
+          (active
+            ? "bg-white shadow-[0_0_6px_rgba(255,255,255,0.35)]"
+            : "border border-zinc-700 bg-transparent")
         }
       />
       {/* 标题行 */}

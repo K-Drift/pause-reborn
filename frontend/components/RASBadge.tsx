@@ -105,15 +105,6 @@ function Ring({ score, tone }: { score: number | null; tone: RASTone }) {
   );
 }
 
-// Stage 9.F:每项分数按自身 tier 染色,一眼能看出哪项最弱
-//   ≥85 success / ≥70 brand-from / ≥55 amber / <55 muted
-function tierClasses(value: number): { text: string; bar: string } {
-  if (value >= 85) return { text: "text-text-primary", bar: "bg-text-primary/60" };
-  if (value >= 70) return { text: "text-text-secondary", bar: "bg-text-secondary/50" };
-  if (value >= 55) return { text: "text-accent-warning", bar: "bg-accent-warning/70" };
-  return { text: "text-text-tertiary", bar: "bg-text-tertiary/40" };
-}
-
 function BreakdownBars({ breakdown }: { breakdown: RASBreakdown }) {
   const items = [
     { label: "契合", value: breakdown.fit, icon: <IconTarget /> },
@@ -122,28 +113,19 @@ function BreakdownBars({ breakdown }: { breakdown: RASBreakdown }) {
     { label: "提升", value: breakdown.lift, icon: <IconTrendingUp /> },
   ];
   return (
-    <div className="mt-3 grid grid-cols-4 gap-2.5">
+    <div className="mt-3 space-y-1.5">
       {items.map((it) => {
         const v = Math.round(it.value);
-        const pct = Math.max(0, Math.min(100, it.value));
-        const cls = tierClasses(it.value);
+        const tier = tierOpacity(it.value);
         return (
-          <div key={it.label} className="flex flex-col gap-1">
-            <div className="flex items-baseline justify-between gap-1">
-              <span className={"shrink-0 " + cls.text} aria-hidden>
-                {it.icon}
-              </span>
-              <span className={"font-mono text-sm font-medium tabular-nums " + cls.text}>
-                {v}
-              </span>
-            </div>
-            <div className="h-1 overflow-hidden rounded-full bg-background-card">
-              <div
-                className={"h-full rounded-full transition-[width] duration-700 ease-out " + cls.bar}
-                style={{ width: `${pct}%` }}
-              />
-            </div>
-            <span className="text-[10px] text-text-tertiary">{it.label}</span>
+          <div key={it.label} className="flex items-center gap-2">
+            <span className={"w-3 shrink-0 text-[9px] " + tier} aria-hidden>
+              {it.icon}
+            </span>
+            <span className={"w-8 shrink-0 font-mono text-[11px] tabular-nums " + tier}>
+              {v}
+            </span>
+            <span className={"text-[10px] " + tier}>{it.label}</span>
           </div>
         );
       })}
@@ -151,18 +133,25 @@ function BreakdownBars({ breakdown }: { breakdown: RASBreakdown }) {
   );
 }
 
-// 12×12 inline SVG icons(currentColor)
+function tierOpacity(value: number): string {
+  if (value >= 85) return "text-zinc-200";
+  if (value >= 70) return "text-zinc-400";
+  if (value >= 55) return "text-zinc-500";
+  return "text-zinc-600";
+}
+
+// 9×9 inline SVG icons(currentColor)
 function IconTarget() {
   return (
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.4" />
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden>
+      <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.6" />
       <circle cx="8" cy="8" r="2.4" fill="currentColor" />
     </svg>
   );
 }
 function IconPalette() {
   return (
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden>
       <path
         d="M8 2.5a5.5 5.5 0 1 0 0 11c.6 0 1-.4 1-.9 0-.3-.2-.6-.4-.8-.2-.3-.4-.6-.4-.9 0-.5.4-.9.9-.9h1.4c1.6 0 2.9-1.3 2.9-2.9C13.4 4.1 11 2.5 8 2.5z"
         stroke="currentColor"
@@ -176,7 +165,7 @@ function IconPalette() {
 }
 function IconShield() {
   return (
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden>
       <path
         d="M8 2 3 4v4.5C3 11.5 5 13.5 8 14.5c3-1 5-3 5-6V4l-5-2z"
         stroke="currentColor"
@@ -188,7 +177,7 @@ function IconShield() {
 }
 function IconTrendingUp() {
   return (
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" aria-hidden>
       <path
         d="M2 12l4-4 3 3 5-6"
         stroke="currentColor"

@@ -321,7 +321,7 @@ function SceneFields({ scene }: { scene: SceneJSON }) {
           {scene.concrete_description && (
             <div className="border-l-2 border-zinc-700 pl-3">
               <FieldLabel>画面</FieldLabel>
-              <div className="mt-0.5 font-serif text-base italic leading-relaxed text-zinc-100">
+              <div className="mt-0.5 text-sm font-normal leading-relaxed text-zinc-300">
                 {scene.concrete_description}
               </div>
             </div>

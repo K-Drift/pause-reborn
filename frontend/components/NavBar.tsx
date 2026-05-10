@@ -36,13 +36,13 @@ export default function NavBar({
           </span>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-10">
           <SceneSwitcher value={sceneId} onChange={onSceneChange} />
-          <div className="h-5 w-px bg-white/[0.08]" />
+          <div className="h-5 w-px bg-white/10" />
           <PersonaSwitcher value={personaId} onChange={onPersonaChange} />
-          <div className="h-5 w-px bg-white/[0.08]" />
+          <div className="h-5 w-px bg-white/10" />
           <StateSwitcher value={userState} onChange={onUserStateChange} />
-          <div className="h-5 w-px bg-white/[0.08]" />
+          <div className="h-5 w-px bg-white/10" />
           {/* Stage 9.C:跳转到品牌主 Dashboard(B 端视角) */}
           <Link
             href="/advertiser"
