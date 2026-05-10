@@ -12,8 +12,8 @@ interface Props {
 export default function PersonaSwitcher({ value, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
-      <span className="whitespace-nowrap text-xs text-text-tertiary">画像</span>
-      <div className="inline-flex items-center gap-4">
+      <span className="whitespace-nowrap text-xs text-zinc-600">画像</span>
+      <div className="inline-flex items-center gap-1">
         {PERSONAS.map((p) => {
           const active = p.id === value;
           return (
@@ -23,10 +23,10 @@ export default function PersonaSwitcher({ value, onChange }: Props) {
               title={p.hint}
               onClick={() => onChange(p.id)}
               className={
-                "cursor-pointer whitespace-nowrap text-xs transition-all duration-300 ease-in-out " +
+                "cursor-pointer whitespace-nowrap px-3 py-1 text-xs transition-all duration-300 ease-in-out " +
                 (active
-                  ? "text-zinc-100 drop-shadow-sm"
-                  : "text-zinc-500 hover:text-zinc-300")
+                  ? "rounded-full bg-zinc-800/80 font-medium text-zinc-100 shadow-sm shadow-black/20"
+                  : "text-zinc-400 hover:text-zinc-300")
               }
             >
               {p.label}

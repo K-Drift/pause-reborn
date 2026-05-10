@@ -31,7 +31,7 @@ export default function NavBar({
           <h1 className="text-3xl font-bold leading-none text-white/90">
             Pause Reborn
           </h1>
-          <span className="text-xs text-text-tertiary">
+          <span className="whitespace-nowrap text-xs text-zinc-500 mr-8">
             腾讯视频暂停体验重塑系统
           </span>
         </div>
