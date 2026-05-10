@@ -11,7 +11,7 @@ interface Props {
 export default function StateSwitcher({ value, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs text-text-tertiary">状态</span>
+      <span className="whitespace-nowrap text-xs text-text-tertiary">状态</span>
       <div className="inline-flex items-center gap-4">
         {USER_STATES.map((s) => {
           const active = s.id === value;
@@ -23,7 +23,7 @@ export default function StateSwitcher({ value, onChange }: Props) {
               title={s.hint}
               onClick={() => onChange(s.id)}
               className={
-                "cursor-pointer text-xs transition-all duration-300 ease-in-out " +
+                "cursor-pointer whitespace-nowrap text-xs transition-all duration-300 ease-in-out " +
                 (active
                   ? fatigue
                     ? "text-amber-200/80 drop-shadow-sm"

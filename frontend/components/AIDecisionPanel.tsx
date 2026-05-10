@@ -152,7 +152,7 @@ function PanelTabs({
     { id: "detail", label: "决策详情" },
   ];
   return (
-    <div className="inline-flex items-center gap-0.5">
+    <div className="inline-flex items-center gap-0.5 rounded-full border border-white/5 bg-zinc-900/50 p-1">
       {items.map((it) => {
         const active = it.id === tab;
         return (
@@ -161,10 +161,10 @@ function PanelTabs({
             type="button"
             onClick={() => onChange(it.id)}
             className={
-              "cursor-pointer px-4 py-1.5 text-xs transition-all duration-300 ease-in-out " +
+              "whitespace-nowrap rounded-full px-4 py-1.5 text-xs transition-all duration-300 ease-in-out " +
               (active
-                ? "text-zinc-100"
-                : "text-zinc-600 hover:text-zinc-400")
+                ? "bg-zinc-800 text-zinc-100 shadow-sm shadow-black/20"
+                : "text-zinc-500 hover:text-zinc-300")
             }
           >
             {it.label}

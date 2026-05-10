@@ -32,7 +32,7 @@ export default function SceneSwitcher({ value, onChange }: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex items-center gap-2 rounded-full bg-white/[0.04] px-5 py-2 text-sm text-zinc-300 transition-all duration-300 ease-in-out hover:bg-white/[0.08] hover:text-zinc-100"
+        className="flex items-center whitespace-nowrap gap-2 rounded-full bg-white/[0.04] px-5 py-2 text-sm text-zinc-300 transition-all duration-300 ease-in-out hover:bg-white/[0.08] hover:text-zinc-100"
       >
         <span>{current.label}</span>
         <svg
