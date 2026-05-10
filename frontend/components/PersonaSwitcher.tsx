@@ -23,10 +23,10 @@ export default function PersonaSwitcher({ value, onChange }: Props) {
               title={p.hint}
               onClick={() => onChange(p.id)}
               className={
-                "relative cursor-pointer rounded-md px-3 py-1.5 text-xs transition-all duration-200 " +
+                "cursor-pointer rounded-full px-3.5 py-1.5 text-xs transition-all duration-200 " +
                 (active
-                  ? "bg-background-elevated text-text-primary after:absolute after:bottom-[-2px] after:left-[10%] after:right-[10%] after:h-0.5 after:bg-gradient-to-r after:from-accent-brand-from after:to-accent-brand-to after:content-['']"
-                  : "text-text-tertiary hover:bg-background-elevated/50 hover:text-text-secondary")
+                  ? "bg-white/[0.10] text-text-primary"
+                  : "text-text-tertiary hover:bg-white/[0.04] hover:text-text-secondary")
               }
             >
               {p.label}

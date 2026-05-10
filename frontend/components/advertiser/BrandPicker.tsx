@@ -17,7 +17,7 @@ export default function BrandPicker({ value, onChange }: Props) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="cursor-pointer rounded-md border border-border-default bg-background-elevated px-3 py-1.5 text-sm text-text-primary outline-none transition-colors hover:border-accent-brand-from focus:border-accent-brand-from"
+        className="cursor-pointer rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-sm text-text-primary outline-none transition-colors hover:bg-white/[0.08] focus:bg-white/[0.08]"
       >
         {BRANDS.map((b) => (
           <option key={b.id} value={b.id}>

@@ -256,7 +256,7 @@ export default function Home() {
       {/* Stage 8.4:VPP 进阶展示区已下线 */}
       {/* <VPPShowcase /> */}
 
-      <footer className="mt-4 border-t border-border-subtle px-8 py-4 text-xs text-text-tertiary">
+      <footer className="mt-4 border-t border-white/[0.06] px-8 py-4 text-xs text-text-tertiary">
         Demo · Stage 8 · 仅用于演示,所有品牌、文案、评分均为虚构占位
       </footer>
     </>

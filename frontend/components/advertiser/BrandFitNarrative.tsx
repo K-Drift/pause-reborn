@@ -12,7 +12,7 @@ export default function BrandFitNarrative({ data }: Props) {
   const insights = computeInsights(data);
 
   return (
-    <div className="rounded-xl border border-border-subtle bg-background-card p-5">
+    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 backdrop-blur-sm">
       <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
         AI 投放分析
       </div>
@@ -81,11 +81,11 @@ function InsightCard({
   hint: string;
 }) {
   const accent =
-    tone === "success" ? "text-accent-success" : "text-accent-warning";
+    tone === "success" ? "text-accent-brand-from" : "text-accent-warning";
   const dot =
-    tone === "success" ? "bg-accent-success" : "bg-accent-warning";
+    tone === "success" ? "bg-accent-brand-from" : "bg-accent-warning";
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-border-subtle bg-background-elevated p-4 transition-colors duration-300 hover:border-border-default">
+    <div className="group relative overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.03] p-4 transition-colors duration-300 hover:border-white/[0.10]">
       <div className="flex items-center gap-2">
         <span className={"inline-block h-1.5 w-1.5 rounded-full " + dot} />
         <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
@@ -118,14 +118,14 @@ function RasInsightCard({
     trend === "up" ? "上行" : trend === "down" ? "下行" : "平稳";
   const trendColor =
     trend === "up"
-      ? "text-accent-success"
+      ? "text-text-secondary"
       : trend === "down"
         ? "text-accent-warning"
         : "text-text-tertiary";
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-border-subtle bg-background-elevated p-4 transition-colors duration-300 hover:border-border-default">
+    <div className="group relative overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.03] p-4 transition-colors duration-300 hover:border-white/[0.10]">
       <div className="flex items-center gap-2">
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-gradient-to-r from-accent-brand-from to-accent-brand-to" />
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent-brand-from" />
         <span className="text-[10px] uppercase tracking-widest text-text-tertiary">
           RAS 表现
         </span>
@@ -153,19 +153,19 @@ function RasInsightCard({
 function ToneTag({ label, index }: { label: string; index: number }) {
   // 5 种渐变色点,基于 index 循环 — 让同一品牌的多个 tag 视觉有节奏
   const dotColors = [
-    "bg-accent-success",
     "bg-accent-brand-from",
-    "bg-accent-brand-to",
+    "bg-accent-brand-from/70",
     "bg-accent-warning",
-    "bg-accent-success/70",
+    "bg-accent-brand-to",
+    "bg-text-tertiary",
   ];
   return (
-    <span className="relative inline-flex items-center gap-1.5 rounded-full bg-background-elevated px-3 py-1 text-[11px] text-text-secondary">
+    <span className="relative inline-flex items-center gap-1.5 rounded-full bg-white/[0.03] px-3 py-1 text-[11px] text-text-secondary">
       <span
         className="pointer-events-none absolute inset-0 rounded-full p-px"
         style={{
           background:
-            "linear-gradient(135deg, var(--color-accent-brand-from), var(--color-accent-brand-to))",
+            "linear-gradient(135deg, var(--color-accent-brand-from), var(--color-accent-brand-from))",
           WebkitMask:
             "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
           WebkitMaskComposite: "xor",

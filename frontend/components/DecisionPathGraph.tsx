@@ -34,21 +34,21 @@ const BRANCH_LABEL: Record<Branch, string> = {
 // 三分支颜色:绿/红/黄 = success/danger/warning
 const BRANCH_TINT: Record<Branch, { dot: string; border: string; bg: string; text: string }> = {
   show_ad: {
-    dot: "bg-accent-success",
-    border: "border-accent-success/40",
-    bg: "bg-accent-success/10",
-    text: "text-accent-success",
+    dot: "bg-text-secondary",
+    border: "border-white/[0.10]",
+    bg: "bg-white/[0.04]",
+    text: "text-text-secondary",
   },
   no_ad: {
-    dot: "bg-rose-400",
-    border: "border-rose-500/40",
-    bg: "bg-rose-500/10",
-    text: "text-rose-300",
+    dot: "bg-rose-400/60",
+    border: "border-rose-500/25",
+    bg: "bg-rose-500/[0.06]",
+    text: "text-rose-300/70",
   },
   content_switch: {
     dot: "bg-accent-warning",
-    border: "border-accent-warning/40",
-    bg: "bg-accent-warning/10",
+    border: "border-accent-warning/30",
+    bg: "bg-accent-warning/[0.06]",
     text: "text-accent-warning",
   },
 };
@@ -80,7 +80,7 @@ export default function DecisionPathGraph({
   return (
     <div className="flex flex-col gap-2">
       {/* 节点 1:暂停帧 */}
-      <PathNode title="暂停帧" subtitle="原始信号" dot="bg-text-tertiary">
+      <PathNode title="暂停帧" subtitle="原始信号" dot="bg-text-tertiary/70">
         <div className="flex items-center gap-3">
           {frameImageSrc && (
             <img
@@ -98,14 +98,14 @@ export default function DecisionPathGraph({
       <DownConnector />
 
       {/* 节点 2:VLM 信号 */}
-      <PathNode title="VLM 信号" subtitle="第一段 · 场景理解" dot="bg-accent-brand-from">
+      <PathNode title="VLM 信号" subtitle="第一段 · 场景理解" dot="bg-accent-brand-from/70">
         {scene ? <VLMSignals scene={scene} /> : <Pending />}
       </PathNode>
 
       <DownConnector />
 
       {/* 节点 3:画像匹配 */}
-      <PathNode title="画像匹配" subtitle="用户层 · 静态" dot="bg-accent-brand-to">
+      <PathNode title="画像匹配" subtitle="用户层 · 静态" dot="bg-accent-brand-to/70">
         <div className="text-sm text-text-primary">{persona.label}</div>
         <div className="mt-0.5 text-xs text-text-tertiary">{persona.hint}</div>
       </PathNode>
@@ -118,10 +118,10 @@ export default function DecisionPathGraph({
         subtitle="动态 · 否决与改写"
         dot={
           stateOverride === "danger"
-            ? "bg-rose-400"
+            ? "bg-rose-400/60"
             : stateOverride === "warning"
               ? "bg-accent-warning"
-              : "bg-text-tertiary"
+              : "bg-text-tertiary/70"
         }
         tone={stateOverride}
       >
@@ -129,7 +129,7 @@ export default function DecisionPathGraph({
       </PathNode>
 
       {/* 分支扇出 */}
-      <div className="ml-3 mt-1 border-l-2 border-border-default pt-2">
+      <div className="ml-3 mt-1 border-l-2 border-white/[0.08] pt-2">
         <div className="ml-3 mb-2 text-[10px] uppercase tracking-widest text-text-tertiary">
           三种可能输出
         </div>
@@ -170,10 +170,10 @@ function PathNode({
 }) {
   const ring =
     tone === "danger"
-      ? "border-rose-500/40 bg-rose-500/5"
+      ? "border-rose-500/25 bg-rose-500/[0.04]"
       : tone === "warning"
-        ? "border-accent-warning/40 bg-accent-warning/5"
-        : "border-border-subtle bg-background-elevated";
+        ? "border-accent-warning/25 bg-accent-warning/[0.04]"
+        : "border-white/[0.06] bg-white/[0.03]";
   return (
     <div
       className={
@@ -198,7 +198,7 @@ function PathNode({
 }
 
 function DownConnector() {
-  return <div className="ml-4 h-3 border-l-2 border-border-default" />;
+  return <div className="ml-4 h-3 border-l-2 border-white/[0.08]" />;
 }
 
 function VLMSignals({ scene }: { scene: SceneJSON }) {
@@ -216,7 +216,7 @@ function VLMSignals({ scene }: { scene: SceneJSON }) {
       <div
         className={
           scene.sensitivity === "high"
-            ? "font-medium text-rose-300"
+            ? "font-medium text-rose-300/70"
             : "text-text-secondary"
         }
       >

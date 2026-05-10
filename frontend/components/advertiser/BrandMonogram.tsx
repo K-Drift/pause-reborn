@@ -13,7 +13,7 @@ export default function BrandMonogram({ brand, size = 56 }: Props) {
   const monogram = (segment.slice(0, 2) || brand.slice(0, 2)) || "·";
   return (
     <div
-      className="flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-accent-brand-from to-accent-brand-to font-semibold text-text-primary shadow-lg shadow-accent-brand-from/20"
+      className="flex shrink-0 items-center justify-center rounded-2xl bg-accent-brand-from font-semibold text-white/90 shadow-lg shadow-black/30"
       style={{ width: size, height: size, fontSize: size * 0.36 }}
     >
       {monogram}

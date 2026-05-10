@@ -57,9 +57,9 @@ export default function AIDecisionPanel({
     decision._ai_status === "fallback";
 
   return (
-    <aside className="flex h-full flex-col overflow-y-auto rounded-2xl bg-background-card p-6">
+    <aside className="flex h-full flex-col overflow-y-auto rounded-2xl border border-white/[0.06] bg-background-card/80 p-6 backdrop-blur-sm">
       {/* 顶部标题区 */}
-      <div className="mb-6 border-b border-border-subtle pb-4">
+      <div className="mb-6 border-b border-white/[0.06] pb-4">
         <div className="text-xs uppercase tracking-widest text-text-tertiary">
           DECISION CONSOLE
         </div>
@@ -520,7 +520,7 @@ function ScoresView({ ad }: { ad: ShowAdDecision }) {
       />
       <div className="flex items-center justify-between">
         <div className="text-xs text-text-tertiary">预测注意力捕获率</div>
-        <div className="text-xs font-mono text-accent-success">
+        <div className="text-xs font-mono text-text-secondary">
           {liftLabel} vs 传统弹窗
         </div>
       </div>
@@ -546,7 +546,7 @@ function ScoreRow({
       </div>
       <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-background-elevated">
         <div
-          className="h-full rounded-full bg-accent-success transition-[width] duration-700 ease-out"
+          className="h-full rounded-full bg-text-secondary/50 transition-[width] duration-700 ease-out"
           style={{ width: `${clamped}%` }}
         />
       </div>

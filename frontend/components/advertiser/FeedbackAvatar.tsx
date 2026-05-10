@@ -26,8 +26,8 @@ export default function FeedbackAvatar({ seed, size = 24 }: Props) {
   const initial = SURNAMES[h % SURNAMES.length];
   // 色相 0-360,饱和度/亮度固定,保持深色调
   const hue = h % 360;
-  const bg = `hsl(${hue}, 38%, 22%)`;
-  const fg = `hsl(${hue}, 55%, 75%)`;
+  const bg = `hsl(${hue}, 18%, 18%)`;
+  const fg = `hsl(${hue}, 30%, 65%)`;
   return (
     <div
       className="flex shrink-0 select-none items-center justify-center rounded-md font-medium"

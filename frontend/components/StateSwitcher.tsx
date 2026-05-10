@@ -7,7 +7,7 @@ interface Props {
   onChange: (s: UserState) => void;
 }
 
-// 同 PersonaSwitcher 的胶囊+ ::after underline 套路。正常态绿色,疲劳态琥珀。
+// 胶囊背景:正常态 warm amber tint,疲劳态 amber tint
 export default function StateSwitcher({ value, onChange }: Props) {
   return (
     <div className="flex items-center gap-2">
@@ -16,9 +16,6 @@ export default function StateSwitcher({ value, onChange }: Props) {
         {USER_STATES.map((s) => {
           const active = s.id === value;
           const fatigue = s.id === "emotional_fatigue";
-          const underlineColor = fatigue
-            ? "after:bg-accent-warning"
-            : "after:bg-accent-success";
           return (
             <button
               key={s.id}
@@ -26,10 +23,12 @@ export default function StateSwitcher({ value, onChange }: Props) {
               title={s.hint}
               onClick={() => onChange(s.id)}
               className={
-                "relative cursor-pointer rounded-md px-3 py-1.5 text-xs transition-all duration-200 " +
+                "cursor-pointer rounded-full px-3.5 py-1.5 text-xs transition-all duration-200 " +
                 (active
-                  ? `bg-background-elevated text-text-primary after:absolute after:bottom-[-2px] after:left-[10%] after:right-[10%] after:h-0.5 after:content-[''] ${underlineColor}`
-                  : "text-text-tertiary hover:bg-background-elevated/50 hover:text-text-secondary")
+                  ? fatigue
+                    ? "bg-amber-900/30 text-amber-200/80"
+                    : "bg-white/[0.10] text-text-primary"
+                  : "text-text-tertiary hover:bg-white/[0.04] hover:text-text-secondary")
               }
             >
               {s.label}

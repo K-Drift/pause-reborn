@@ -32,7 +32,7 @@ export default function SceneSwitcher({ value, onChange }: Props) {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex items-center gap-2 rounded-md bg-background-elevated px-4 py-1.5 text-sm text-text-primary transition-colors duration-200 hover:bg-background-card"
+        className="flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-1.5 text-sm text-text-primary transition-colors duration-200 hover:bg-white/[0.10]"
       >
         <span>{current.label}</span>
         <svg
@@ -57,7 +57,7 @@ export default function SceneSwitcher({ value, onChange }: Props) {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 top-full z-50 mt-2 min-w-[180px] overflow-hidden rounded-md bg-background-card shadow-2xl"
+          className="absolute right-0 top-full z-50 mt-2 min-w-[180px] overflow-hidden rounded-lg border border-white/[0.08] bg-background-card/95 shadow-2xl backdrop-blur-md"
         >
           {SCENES.map((s) => {
             const selected = s.id === value;
@@ -74,8 +74,8 @@ export default function SceneSwitcher({ value, onChange }: Props) {
                 className={
                   "relative block w-full px-4 py-2 text-left text-sm transition-colors duration-200 " +
                   (selected
-                    ? "bg-background-elevated text-text-primary"
-                    : "text-text-secondary hover:bg-background-elevated hover:text-text-primary")
+                    ? "bg-white/[0.06] text-text-primary"
+                    : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary")
                 }
               >
                 {/* 选中态:左侧 2px 品牌渐变细条 */}

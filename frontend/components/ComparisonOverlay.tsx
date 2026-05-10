@@ -26,7 +26,7 @@ export default function ComparisonOverlay({
 }: Props) {
   return (
     <div
-      className="absolute inset-0 z-10 cursor-default bg-background-base p-4"
+      className="absolute inset-0 z-10 cursor-default bg-background-base/95 p-4 backdrop-blur-sm"
       onClick={(e) => e.stopPropagation()}
     >
       <button
@@ -35,7 +35,7 @@ export default function ComparisonOverlay({
           e.stopPropagation();
           onResume();
         }}
-        className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-md border border-border-default bg-background-elevated/90 px-3 py-1.5 text-xs text-text-secondary backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-accent-success/50 hover:text-text-primary"
+        className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-text-secondary backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/[0.08] hover:text-text-primary"
       >
         <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
           <path d="M5 4l-3 4 3 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
@@ -113,7 +113,7 @@ function CurrentSide({ scene }: { scene: SceneMeta }) {
       <div className="absolute left-1/2 top-1/2 w-[60%] -translate-x-1/2 -translate-y-1/2">
         <div
           className="overflow-hidden rounded-md shadow-2xl shadow-black/60"
-          style={{ border: "1px solid rgba(255, 80, 80, 0.3)" }}
+          style={{ border: "1px solid rgba(255, 255, 255, 0.08)" }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -154,10 +154,10 @@ function RebornSide({
       header={
         <>
           <div className="inline-flex items-center gap-2">
-            <span className="rounded-full border border-accent-brand-from/40 bg-gradient-to-r from-accent-brand-from/15 to-accent-brand-to/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.25em] text-accent-brand-from">
+            <span className="rounded-full border border-white/[0.10] bg-white/[0.05] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.25em] text-text-secondary">
               AFTER
             </span>
-            <span className="text-xs text-accent-success">
+            <span className="text-xs text-text-secondary">
               AI 改造后 · PAUSE REBORN
             </span>
           </div>

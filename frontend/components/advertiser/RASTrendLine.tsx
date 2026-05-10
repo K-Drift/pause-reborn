@@ -48,7 +48,7 @@ export default function RASTrendLine({ data }: Props) {
   const showPeak = peakIdx !== coords.length - 1;
 
   return (
-    <div className="rounded-xl border border-border-subtle bg-background-card p-5">
+    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 backdrop-blur-sm">
       <div className="flex items-baseline justify-between">
         <div>
           <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
@@ -62,7 +62,7 @@ export default function RASTrendLine({ data }: Props) {
           <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
             30 天均值
           </div>
-          <div className="mt-1 text-2xl font-medium tabular-nums text-accent-success">
+          <div className="mt-1 font-serif text-2xl font-medium tabular-nums text-text-primary">
             {avg}
           </div>
         </div>
@@ -130,9 +130,10 @@ export default function RASTrendLine({ data }: Props) {
             points={polyline}
             fill="none"
             stroke="var(--color-accent-success)"
-            strokeWidth={2}
+            strokeWidth={1.8}
             strokeLinejoin="round"
             strokeLinecap="round"
+            opacity="0.85"
           />
 
           {/* 峰值小圆点 */}
@@ -142,7 +143,7 @@ export default function RASTrendLine({ data }: Props) {
               cy={peak.y}
               r={3}
               fill="var(--color-accent-success)"
-              opacity="0.5"
+              opacity="0.4"
             />
           )}
 
@@ -152,20 +153,21 @@ export default function RASTrendLine({ data }: Props) {
             cy={last.y}
             r={5}
             fill="var(--color-accent-success)"
-            opacity="0.25"
+            opacity="0.2"
           />
           <circle
             cx={last.x}
             cy={last.y}
             r={3}
             fill="var(--color-accent-success)"
+            opacity="0.85"
           />
         </svg>
 
         {/* HTML overlay(SVG 用了 preserveAspectRatio="none" 会形变,文字必须用 HTML 层) */}
         {/* 末点:今 N */}
         <div
-          className="pointer-events-none absolute font-mono text-[10px] text-accent-success"
+          className="pointer-events-none absolute font-mono text-[10px] text-text-secondary"
           style={{
             left: `${(last.x / w) * 100}%`,
             top: `${(last.y / h) * 100}%`,
@@ -191,7 +193,7 @@ export default function RASTrendLine({ data }: Props) {
         {/* 峰值标注 */}
         {showPeak && (
           <div
-            className="pointer-events-none absolute font-mono text-[10px] text-accent-success/70"
+            className="pointer-events-none absolute font-mono text-[10px] text-text-tertiary"
             style={{
               left: `${(peak.x / w) * 100}%`,
               top: `${(peak.y / h) * 100}%`,

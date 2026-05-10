@@ -25,10 +25,10 @@ export default function NavBar({
   onUserStateChange,
 }: Props) {
   return (
-    <header className="sticky top-0 z-50 h-16 border-b border-border-subtle bg-background-base/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 h-16 border-b border-white/[0.06] bg-background-base/80 backdrop-blur-md">
       <div className="flex h-full items-center justify-between px-8">
         <div className="flex items-center gap-3">
-          <h1 className="text-3xl font-bold leading-none bg-gradient-to-r from-accent-brand-from to-accent-brand-to bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold leading-none text-white/90">
             Pause Reborn
           </h1>
           <span className="text-xs text-text-tertiary">
@@ -36,17 +36,17 @@ export default function NavBar({
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-5">
           <SceneSwitcher value={sceneId} onChange={onSceneChange} />
-          <div className="h-6 w-px bg-border-subtle" />
+          <div className="h-5 w-px bg-white/[0.08]" />
           <PersonaSwitcher value={personaId} onChange={onPersonaChange} />
-          <div className="h-6 w-px bg-border-subtle" />
+          <div className="h-5 w-px bg-white/[0.08]" />
           <StateSwitcher value={userState} onChange={onUserStateChange} />
-          <div className="h-6 w-px bg-border-subtle" />
+          <div className="h-5 w-px bg-white/[0.08]" />
           {/* Stage 9.C:跳转到品牌主 Dashboard(B 端视角) */}
           <Link
             href="/advertiser"
-            className="rounded-md border border-border-default bg-background-elevated px-3 py-1.5 text-xs text-text-secondary transition-colors hover:border-accent-brand-from hover:text-text-primary"
+            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-xs text-text-secondary transition-colors hover:bg-white/[0.08] hover:text-text-primary"
           >
             品牌主视角 →
           </Link>

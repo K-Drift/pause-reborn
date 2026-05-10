@@ -16,7 +16,7 @@ export default function FeedbackList({ data }: Props) {
   const [headline, ...rest] = items;
 
   return (
-    <div className="rounded-xl border border-border-subtle bg-background-card p-5">
+    <div className="rounded-xl border border-white/[0.06] bg-background-card/80 p-5 backdrop-blur-sm">
       <div className="text-[10px] uppercase tracking-widest text-text-tertiary">
         用户主观接受度反馈
       </div>
@@ -56,10 +56,10 @@ function FeaturedQuote({
   scene: string;
 }) {
   return (
-    <div className="relative mt-5 overflow-hidden rounded-xl border border-accent-brand-from/20 bg-gradient-to-br from-accent-brand-from/[0.06] via-transparent to-accent-brand-to/[0.05] p-6">
+    <div className="relative mt-5 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
       {/* 大引号:左上角浮动 */}
       <span
-        className="absolute left-3 top-2 select-none bg-gradient-to-br from-accent-brand-from to-accent-brand-to bg-clip-text font-serif text-7xl leading-none text-transparent"
+        className="absolute left-3 top-2 select-none font-serif text-7xl leading-none text-white/[0.08]"
         aria-hidden
       >
         &ldquo;
@@ -69,7 +69,7 @@ function FeaturedQuote({
         <div className="text-[10px] uppercase tracking-[0.3em] text-accent-brand-from/80">
           代表性反馈
         </div>
-        <p className="mt-2 text-xl font-medium leading-relaxed text-text-primary">
+        <p className="mt-2 font-serif text-xl font-medium leading-relaxed text-text-primary">
           {quote}
         </p>
         <div className="mt-4 flex items-center gap-2">
@@ -94,8 +94,8 @@ function CompactQuote({
   // sentiment 决定卡片调性
   const tint =
     sentiment === "pos"
-      ? "border-accent-success/15 bg-accent-success/[0.04]"
-      : "border-accent-brand-from/15 bg-accent-brand-from/[0.04]";
+      ? "border-white/[0.08] bg-white/[0.03]"
+      : "border-white/[0.06] bg-white/[0.02]";
 
   return (
     <div className={"flex flex-col gap-3 rounded-lg border p-4 " + tint}>
@@ -116,15 +116,15 @@ function CompactQuote({
 function SentimentChip({ sentiment }: { sentiment: "pos" | "neutral" }) {
   if (sentiment === "pos") {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full border border-accent-success/30 bg-accent-success/10 px-2 py-0.5 text-[10px] text-accent-success">
-        <span className="inline-block h-1 w-1 rounded-full bg-accent-success" />
+      <span className="inline-flex items-center gap-1 rounded-full border border-accent-brand-from/20 bg-accent-brand-from/[0.08] px-2 py-0.5 text-[10px] text-accent-brand-from">
+        <span className="inline-block h-1 w-1 rounded-full bg-accent-brand-from" />
         正向
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-accent-brand-from/30 bg-accent-brand-from/10 px-2 py-0.5 text-[10px] text-accent-brand-from">
-      <span className="inline-block h-1 w-1 rounded-full bg-accent-brand-from" />
+    <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[10px] text-text-tertiary">
+      <span className="inline-block h-1 w-1 rounded-full bg-text-tertiary" />
       中性
     </span>
   );

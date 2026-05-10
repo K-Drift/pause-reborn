@@ -25,10 +25,10 @@ export default function AdvertiserPage() {
   return (
     <>
       {/* 顶部条:Pause Reborn 品牌 + 反链回主体验 */}
-      <header className="sticky top-0 z-50 h-16 border-b border-border-subtle bg-background-base/80 backdrop-blur-md">
+      <header className="sticky top-0 z-50 h-16 border-b border-white/[0.06] bg-background-base/80 backdrop-blur-md">
         <div className="flex h-full items-center justify-between px-8">
           <div className="flex items-center gap-3">
-            <h1 className="bg-gradient-to-r from-accent-brand-from to-accent-brand-to bg-clip-text text-3xl font-bold leading-none text-transparent">
+            <h1 className="text-3xl font-bold leading-none text-white/90">
               Pause Reborn
             </h1>
             <span className="text-xs text-text-tertiary">
@@ -37,7 +37,7 @@ export default function AdvertiserPage() {
           </div>
           <Link
             href="/"
-            className="rounded-md border border-border-default bg-background-elevated px-3 py-1.5 text-xs text-text-secondary transition-colors hover:border-accent-brand-from hover:text-text-primary"
+            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-xs text-text-secondary transition-colors hover:bg-white/[0.08] hover:text-text-primary"
           >
             ← 主体验
           </Link>
@@ -59,15 +59,15 @@ export default function AdvertiserPage() {
             <BrandMonogram brand={brandMeta.brand} />
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-3xl font-medium leading-tight text-text-primary">
+                <h2 className="font-serif text-3xl font-medium leading-tight text-text-primary">
                   {brandMeta.brand}
                 </h2>
-                <span className="rounded-full border border-border-default bg-background-elevated px-2.5 py-0.5 text-[11px] text-text-secondary">
+                <span className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-text-secondary">
                   {brandMeta.category}
                 </span>
               </div>
               <div className="mt-2 flex items-center gap-1.5 text-[11px] text-text-tertiary">
-                <span className="inline-block h-1 w-1 rounded-full bg-accent-success/60" />
+                <span className="inline-block h-1 w-1 rounded-full bg-accent-success/50" />
                 数据样本:近 30 天 · Demo 演示用 · 全部为模拟数据
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function AdvertiserPage() {
         </div>
 
         {/* 渐变细线分隔 */}
-        <div className="h-px bg-gradient-to-r from-transparent via-border-subtle to-transparent" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
         {/* 01 投放表现 */}
         <div className="mt-8">
@@ -111,7 +111,7 @@ export default function AdvertiserPage() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-border-subtle pt-4 text-xs text-text-tertiary">
+        <div className="mt-12 border-t border-white/[0.06] pt-4 text-xs text-text-tertiary">
           演示数据 · 不代表真实投放表现 · RAS 公式见{" "}
           <a
             href="https://github.com/K-Drift/pause-reborn/blob/main/docs/RAS.md"
@@ -129,7 +129,7 @@ export default function AdvertiserPage() {
 
 function SectionHeader({ index, title }: { index: string; title: string }) {
   return (
-    <div className="flex items-baseline gap-3 border-b border-border-subtle pb-3">
+    <div className="flex items-baseline gap-3 border-b border-white/[0.06] pb-3">
       <span className="font-mono text-xs tabular-nums text-text-tertiary">
         / {index}
       </span>

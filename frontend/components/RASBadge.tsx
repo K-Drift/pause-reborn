@@ -18,7 +18,7 @@ const TONE_STROKE: Record<RASTone, string> = {
 };
 
 const TONE_TEXT: Record<RASTone, string> = {
-  success: "text-accent-success",
+  success: "text-text-primary",
   warning: "text-accent-warning",
   neutral: "text-text-tertiary",
 };
@@ -27,7 +27,7 @@ export default function RASBadge({ decision }: Props) {
   const result = computeRAS(decision);
 
   return (
-    <div className="mb-5 flex items-center gap-4 rounded-xl bg-background-elevated p-4">
+    <div className="mb-5 flex items-center gap-4 rounded-xl border border-white/[0.06] bg-background-elevated/80 p-4 backdrop-blur-sm">
       <Ring score={result.score} tone={result.tone} />
       <div className="min-w-0 flex-1">
         <div className="text-[10px] uppercase tracking-[0.2em] text-text-tertiary">
@@ -108,10 +108,10 @@ function Ring({ score, tone }: { score: number | null; tone: RASTone }) {
 // Stage 9.F:每项分数按自身 tier 染色,一眼能看出哪项最弱
 //   ≥85 success / ≥70 brand-from / ≥55 amber / <55 muted
 function tierClasses(value: number): { text: string; bar: string } {
-  if (value >= 85) return { text: "text-accent-success", bar: "bg-accent-success" };
-  if (value >= 70) return { text: "text-accent-brand-from", bar: "bg-accent-brand-from" };
-  if (value >= 55) return { text: "text-accent-warning", bar: "bg-accent-warning" };
-  return { text: "text-text-tertiary", bar: "bg-text-tertiary/60" };
+  if (value >= 85) return { text: "text-text-primary", bar: "bg-text-primary/60" };
+  if (value >= 70) return { text: "text-text-secondary", bar: "bg-text-secondary/50" };
+  if (value >= 55) return { text: "text-accent-warning", bar: "bg-accent-warning/70" };
+  return { text: "text-text-tertiary", bar: "bg-text-tertiary/40" };
 }
 
 function BreakdownBars({ breakdown }: { breakdown: RASBreakdown }) {
