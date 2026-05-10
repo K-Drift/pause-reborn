@@ -168,7 +168,7 @@ function TimelineNode({
   active?: boolean;
 }) {
   return (
-    <div className="relative pb-8 last:pb-0">
+    <div className="relative pb-8 last:pb-0 transition-all duration-300 ease-in-out">
       {/* 节点圆点:ring-4 ring-black 制造浮在轴线上的立体感 */}
       <div
         className={
@@ -280,8 +280,8 @@ function BranchRow({
   return (
     <div
       className={
-        "flex items-start gap-2.5 py-1.5 " +
-        (active ? "opacity-100" : "opacity-30")
+        "flex items-start gap-2.5 rounded-md py-2 transition-all duration-300 ease-in-out " +
+        (active ? "opacity-100" : "opacity-30 hover:opacity-50")
       }
     >
       <span

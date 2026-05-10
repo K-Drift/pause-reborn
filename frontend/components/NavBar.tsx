@@ -36,7 +36,7 @@ export default function NavBar({
           </span>
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-6">
           <SceneSwitcher value={sceneId} onChange={onSceneChange} />
           <div className="h-5 w-px bg-white/[0.08]" />
           <PersonaSwitcher value={personaId} onChange={onPersonaChange} />
@@ -46,7 +46,7 @@ export default function NavBar({
           {/* Stage 9.C:跳转到品牌主 Dashboard(B 端视角) */}
           <Link
             href="/advertiser"
-            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-xs text-text-secondary transition-colors hover:bg-white/[0.08] hover:text-text-primary"
+            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 text-xs text-zinc-400 transition-all duration-300 ease-in-out hover:bg-white/[0.06] hover:text-zinc-200"
           >
             品牌主视角 →
           </Link>

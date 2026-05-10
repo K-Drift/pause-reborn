@@ -36,7 +36,7 @@ export default function BrandPicker({ value, onChange }: Props) {
           onClick={() => setOpen((v) => !v)}
           aria-haspopup="listbox"
           aria-expanded={open}
-          className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#09090b] px-4 py-1.5 text-sm text-zinc-100 outline-none transition-colors duration-200 hover:border-white/[0.14] hover:bg-white/[0.04]"
+          className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#09090b] px-5 py-2 text-sm text-zinc-100 outline-none transition-all duration-300 ease-in-out hover:border-white/[0.14] hover:bg-white/[0.04]"
         >
           <span className="max-w-[160px] truncate">{current.brand}</span>
           <svg
@@ -62,7 +62,7 @@ export default function BrandPicker({ value, onChange }: Props) {
         {open && (
           <div
             role="listbox"
-            className="absolute right-0 top-full z-50 mt-2 max-h-[380px] min-w-[220px] overflow-y-auto rounded-lg border border-white/10 bg-[#09090b] py-1 shadow-2xl"
+            className="absolute right-0 top-full z-50 mt-2 max-h-[380px] min-w-[220px] overflow-y-auto rounded-xl border border-white/[0.08] bg-[#09090b] py-1.5 shadow-2xl"
           >
             {BRANDS.map((b) => {
               const selected = b.id === value;
@@ -77,7 +77,7 @@ export default function BrandPicker({ value, onChange }: Props) {
                     setOpen(false);
                   }}
                   className={
-                    "relative block w-full px-4 py-2.5 text-left text-sm transition-colors duration-150 " +
+                    "relative block w-full px-5 py-3 text-left text-sm transition-all duration-300 ease-in-out " +
                     (selected
                       ? "bg-white/[0.06] text-zinc-100"
                       : "text-zinc-400 hover:bg-white/5 hover:text-zinc-100")

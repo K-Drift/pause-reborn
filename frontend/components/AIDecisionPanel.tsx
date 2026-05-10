@@ -161,7 +161,7 @@ function PanelTabs({
             type="button"
             onClick={() => onChange(it.id)}
             className={
-              "cursor-pointer px-3 py-1 text-xs transition-all duration-200 " +
+              "cursor-pointer px-4 py-1.5 text-xs transition-all duration-300 ease-in-out " +
               (active
                 ? "text-zinc-100"
                 : "text-zinc-600 hover:text-zinc-400")
@@ -603,7 +603,7 @@ function CollapsibleJSON({ data }: { data: unknown }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="text-xs text-text-tertiary transition-colors duration-200 hover:text-text-secondary"
+        className="text-xs text-zinc-600 transition-all duration-300 ease-in-out hover:text-zinc-400"
       >
         {open ? "▾" : "▸"} 完整 SceneJSON
       </button>

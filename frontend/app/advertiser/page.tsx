@@ -37,7 +37,7 @@ export default function AdvertiserPage() {
           </div>
           <Link
             href="/"
-            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-3.5 py-1.5 text-xs text-text-secondary transition-colors hover:bg-white/[0.08] hover:text-text-primary"
+            className="rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-1.5 text-xs text-zinc-400 transition-all duration-300 ease-in-out hover:bg-white/[0.06] hover:text-zinc-200"
           >
             ← 主体验
           </Link>

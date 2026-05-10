@@ -35,7 +35,7 @@ export default function ComparisonOverlay({
           e.stopPropagation();
           onResume();
         }}
-        className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-text-secondary backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/[0.08] hover:text-text-primary"
+        className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-xs text-zinc-400 backdrop-blur-sm transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-white/[0.06] hover:text-zinc-200"
       >
         <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden>
           <path d="M5 4l-3 4 3 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
